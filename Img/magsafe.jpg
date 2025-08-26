@@ -1,0 +1,66 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="magsafeGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="magnetGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#f0f0f0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#e0e0e0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d0d0d0;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="cableGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="#f8f9fa"/>
+  
+  <!-- MagSafe Base -->
+  <circle cx="200" cy="200" r="80" fill="url(#magsafeGradient)" stroke="#d0d0d0" stroke-width="2"/>
+  
+  <!-- Magnetic Ring -->
+  <circle cx="200" cy="200" r="65" fill="none" stroke="#cccccc" stroke-width="1"/>
+  <circle cx="200" cy="200" r="50" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Inner Charging Area -->
+  <circle cx="200" cy="200" r="35" fill="url(#magnetGradient)" stroke="#c0c0c0" stroke-width="1"/>
+  
+  <!-- Magnetic Alignment Markers -->
+  <circle cx="200" cy="165" r="3" fill="#999999"/>
+  <circle cx="235" cy="200" r="3" fill="#999999"/>
+  <circle cx="200" cy="235" r="3" fill="#999999"/>
+  <circle cx="165" cy="200" r="3" fill="#999999"/>
+  
+  <!-- Center Coil Indicator -->
+  <circle cx="200" cy="200" r="15" fill="none" stroke="#aaaaaa" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Apple Logo -->
+  <path d="M190 190 C190 185, 195 180, 200 180 C205 180, 210 185, 210 190 C210 195, 205 200, 200 200 C195 200, 190 195, 190 190 Z" fill="#cccccc" opacity="0.6"/>
+  <path d="M195 188 C195 186, 197 184, 200 184 C203 184, 205 186, 205 188" fill="none" stroke="#cccccc" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Cable -->
+  <path d="M200 280 Q200 300, 220 320 Q240 340, 260 360 Q280 380, 300 390" fill="none" stroke="url(#cableGradient)" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- USB-C Connector -->
+  <rect x="295" y="385" width="15" height="8" rx="4" ry="4" fill="#e0e0e0" stroke="#999999" stroke-width="1"/>
+  <rect x="298" y="387" width="9" height="4" rx="1" ry="1" fill="#666666"/>
+  
+  <!-- Charging Indicator Light -->
+  <circle cx="200" cy="220" r="2" fill="#4CAF50" opacity="0.8">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Text Labels -->
+  <text x="200" y="320" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#666">MagSafe</text>
+  <text x="200" y="335" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#999">Wireless Charger</text>
+  
+  <!-- Reflection -->
+  <path d="M160 160 Q180 140, 200 160 Q220 180, 200 200 Q180 180, 160 160" fill="#ffffff" opacity="0.3"/>
+  
+  <!-- Shadow -->
+  <ellipse cx="200" cy="380" rx="60" ry="12" fill="#000000" opacity="0.1"/>
+</svg>
