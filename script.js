@@ -584,6 +584,9 @@ function addToCart(productId, productName, productPrice) {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Repair Apple Maceió - Site carregado com sucesso!');
     
+    // Initialize credit card functionality
+    initializeCreditCard();
+    
     // Add event listeners for add to cart buttons
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
     console.log('Found add to cart buttons:', addToCartButtons.length);
@@ -662,6 +665,284 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 600);
     }
 });
+
+// Credit Card Component
+function initializeCreditCard() {
+    const cardNumberInput = document.getElementById('card-number');
+    const cardNameInput = document.getElementById('card-name');
+    const cardExpiryInput = document.getElementById('card-expiry');
+    const cardCvvInput = document.getElementById('card-cvv');
+    const validateButton = document.getElementById('validate-card');
+    
+    const cardDisplayNumber = document.getElementById('card-display-number');
+    const cardDisplayName = document.getElementById('card-display-name');
+    const cardDisplayExpiry = document.getElementById('card-display-expiry');
+    const cardDisplayCvv = document.getElementById('card-display-cvv');
+    const cardSignatureName = document.getElementById('card-signature-name');
+    const cardBrand = document.getElementById('card-brand');
+    const creditCard = document.querySelector('.credit-card');
+    
+    // Check if elements exist before adding event listeners
+    if (!cardNumberInput || !cardNameInput || !cardExpiryInput || !cardCvvInput) {
+        console.log('Credit card elements not found on this page');
+        return;
+    }
+    
+    // Card number formatting and validation
+    cardNumberInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        
+        if (formattedValue.length > 19) {
+            formattedValue = formattedValue.substring(0, 19);
+        }
+        
+        e.target.value = formattedValue;
+        
+        // Update card display
+        const displayValue = formattedValue.padEnd(19, '#').replace(/(.{4})/g, '$1 ').trim();
+        if (cardDisplayNumber) cardDisplayNumber.textContent = displayValue || '#### #### #### ####';
+        
+        // Detect card brand
+        const brand = detectCardBrand(value);
+        if (cardBrand) cardBrand.textContent = brand;
+        
+        // Validate card number
+        validateCardNumber(value, cardNumberInput);
+    });
+    
+    // Card name validation
+    cardNameInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/[^a-zA-Z\s]/g, '').toUpperCase();
+        e.target.value = value;
+        
+        if (cardDisplayName) cardDisplayName.textContent = value || 'SEU NOME AQUI';
+        if (cardSignatureName) cardSignatureName.textContent = value || 'SEU NOME AQUI';
+        
+        validateCardName(value, cardNameInput);
+    });
+    
+    // Card expiry formatting and validation
+    cardExpiryInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        
+        if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        
+        e.target.value = value;
+        if (cardDisplayExpiry) cardDisplayExpiry.textContent = value || 'MM/AA';
+        
+        validateCardExpiry(value, cardExpiryInput);
+    });
+    
+    // CVV validation and card flip
+    cardCvvInput.addEventListener('focus', function() {
+        if (creditCard) creditCard.classList.add('flipped');
+    });
+    
+    cardCvvInput.addEventListener('blur', function() {
+        if (creditCard) creditCard.classList.remove('flipped');
+    });
+    
+    cardCvvInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value;
+        
+        if (cardDisplayCvv) cardDisplayCvv.textContent = value || '###';
+        
+        validateCardCvv(value, cardCvvInput);
+    });
+    
+    // Validate entire card
+    if (validateButton) {
+        validateButton.addEventListener('click', function() {
+            validateEntireCard();
+        });
+    }
+    
+    // Card brand detection
+    function detectCardBrand(number) {
+        const patterns = {
+            'VISA': /^4/,
+            'MASTERCARD': /^5[1-5]/,
+            'AMEX': /^3[47]/,
+            'DISCOVER': /^6(?:011|5)/,
+            'DINERS': /^3[0689]/,
+            'JCB': /^35/
+        };
+        
+        for (const [brand, pattern] of Object.entries(patterns)) {
+            if (pattern.test(number)) {
+                return brand;
+            }
+        }
+        
+        return 'CARD';
+    }
+    
+    // Luhn algorithm for card validation
+    function luhnCheck(number) {
+        let sum = 0;
+        let isEven = false;
+        
+        for (let i = number.length - 1; i >= 0; i--) {
+            let digit = parseInt(number[i]);
+            
+            if (isEven) {
+                digit *= 2;
+                if (digit > 9) {
+                    digit -= 9;
+                }
+            }
+            
+            sum += digit;
+            isEven = !isEven;
+        }
+        
+        return sum % 10 === 0;
+    }
+    
+    // Validation functions
+    function validateCardNumber(number, input) {
+        const validation = document.getElementById('number-validation');
+        
+        if (number.length === 0) {
+            setValidationState(input, validation, '', '');
+            return false;
+        }
+        
+        if (number.length < 13) {
+            setValidationState(input, validation, 'invalid', 'Número do cartão deve ter pelo menos 13 dígitos');
+            return false;
+        }
+        
+        if (number.length > 19) {
+            setValidationState(input, validation, 'invalid', 'Número do cartão muito longo');
+            return false;
+        }
+        
+        if (!luhnCheck(number)) {
+            setValidationState(input, validation, 'invalid', 'Número do cartão inválido');
+            return false;
+        }
+        
+        setValidationState(input, validation, 'valid', 'Número do cartão válido');
+        return true;
+    }
+    
+    function validateCardName(name, input) {
+        const validation = document.getElementById('name-validation');
+        
+        if (name.length === 0) {
+            setValidationState(input, validation, '', '');
+            return false;
+        }
+        
+        if (name.length < 2) {
+            setValidationState(input, validation, 'invalid', 'Nome deve ter pelo menos 2 caracteres');
+            return false;
+        }
+        
+        if (!/^[a-zA-Z\s]+$/.test(name)) {
+            setValidationState(input, validation, 'invalid', 'Nome deve conter apenas letras');
+            return false;
+        }
+        
+        setValidationState(input, validation, 'valid', 'Nome válido');
+        return true;
+    }
+    
+    function validateCardExpiry(expiry, input) {
+        const validation = document.getElementById('expiry-validation');
+        
+        if (expiry.length === 0) {
+            setValidationState(input, validation, '', '');
+            return false;
+        }
+        
+        if (expiry.length !== 5) {
+            setValidationState(input, validation, 'invalid', 'Formato deve ser MM/AA');
+            return false;
+        }
+        
+        const [month, year] = expiry.split('/');
+        const monthNum = parseInt(month);
+        const yearNum = parseInt('20' + year);
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + 1;
+        
+        if (monthNum < 1 || monthNum > 12) {
+            setValidationState(input, validation, 'invalid', 'Mês inválido');
+            return false;
+        }
+        
+        if (yearNum < currentYear || (yearNum === currentYear && monthNum < currentMonth)) {
+            setValidationState(input, validation, 'invalid', 'Cartão expirado');
+            return false;
+        }
+        
+        setValidationState(input, validation, 'valid', 'Data válida');
+        return true;
+    }
+    
+    function validateCardCvv(cvv, input) {
+        const validation = document.getElementById('cvv-validation');
+        
+        if (cvv.length === 0) {
+            setValidationState(input, validation, '', '');
+            return false;
+        }
+        
+        if (cvv.length < 3 || cvv.length > 4) {
+            setValidationState(input, validation, 'invalid', 'CVV deve ter 3 ou 4 dígitos');
+            return false;
+        }
+        
+        setValidationState(input, validation, 'valid', 'CVV válido');
+        return true;
+    }
+    
+    function setValidationState(input, validation, state, message) {
+        if (!input || !validation) return;
+        
+        input.className = input.className.replace(/\b(valid|invalid)\b/g, '');
+        validation.className = validation.className.replace(/\b(valid|invalid)\b/g, '');
+        
+        if (state) {
+            input.classList.add(state);
+            validation.classList.add(state);
+        }
+        
+        validation.textContent = message;
+    }
+    
+    function validateEntireCard() {
+        const cardStatus = document.getElementById('card-status');
+        if (!cardStatus) return;
+        
+        const number = cardNumberInput.value.replace(/\s/g, '');
+        const name = cardNameInput.value;
+        const expiry = cardExpiryInput.value;
+        const cvv = cardCvvInput.value;
+        
+        const isNumberValid = validateCardNumber(number, cardNumberInput);
+        const isNameValid = validateCardName(name, cardNameInput);
+        const isExpiryValid = validateCardExpiry(expiry, cardExpiryInput);
+        const isCvvValid = validateCardCvv(cvv, cardCvvInput);
+        
+        cardStatus.className = 'card-status';
+        
+        if (isNumberValid && isNameValid && isExpiryValid && isCvvValid) {
+            cardStatus.classList.add('valid');
+            cardStatus.textContent = '✅ Cartão válido! Todos os dados estão corretos.';
+        } else {
+            cardStatus.classList.add('invalid');
+            cardStatus.textContent = '❌ Cartão inválido. Verifique os dados inseridos.';
+        }
+    }
+}
 
 // Image Zoom Functionality
 function openImageModal(imageSrc, imageAlt) {
