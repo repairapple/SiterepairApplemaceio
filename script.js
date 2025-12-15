@@ -1,141 +1,108 @@
-// Mobile Navigation Toggle
-const navToggle = document.querySelector('.nav-toggle');
-const navMenu = document.querySelector('.nav-menu');
-const navLinks = document.querySelectorAll('.nav-link');
-
-// Toggle mobile menu
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+document.addEventListener('DOMContentLoaded', () => {
+    // Mobile Navigation Toggle
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
     
-    // Animate hamburger menu
-    const bars = navToggle.querySelectorAll('.bar');
-    bars.forEach((bar, index) => {
-        if (navMenu.classList.contains('active')) {
-            if (index === 0) bar.style.transform = 'rotate(45deg) translate(5px, 5px)';
-            if (index === 1) bar.style.opacity = '0';
-            if (index === 2) bar.style.transform = 'rotate(-45deg) translate(7px, -6px)';
-        } else {
-            bar.style.transform = 'none';
-            bar.style.opacity = '1';
-        }
-    });
-});
+    // Toggle mobile menu
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            
+            // Animate hamburger menu
+            const bars = navToggle.querySelectorAll('.bar');
+            bars.forEach((bar, index) => {
+                if (navMenu.classList.contains('active')) {
+                    if (index === 0) bar.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    if (index === 1) bar.style.opacity = '0';
+                    if (index === 2) bar.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                } else {
+                    bar.style.transform = 'none';
+                    bar.style.opacity = '1';
+                }
+            });
+        });
+    }
 
-// Close mobile menu when clicking on a link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        const bars = navToggle.querySelectorAll('.bar');
-        bars.forEach(bar => {
-            bar.style.transform = 'none';
-            bar.style.opacity = '1';
+    // Close mobile menu when clicking on a link
+    if (navLinks.length > 0) {
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu) navMenu.classList.remove('active');
+                if (navToggle) {
+                    const bars = navToggle.querySelectorAll('.bar');
+                    bars.forEach(bar => {
+                        bar.style.transform = 'none';
+                        bar.style.opacity = '1';
+                    });
+                }
+            });
+        });
+    }
+
+    // Smooth scrolling for navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            if (!targetId || targetId === '#') return;
+            
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                const header = document.querySelector('.header');
+                const headerHeight = header ? header.offsetHeight : 0;
+                const targetPosition = targetSection.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
         });
     });
-});
 
-// Smooth scrolling for navigation links
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
+    // Header background on scroll
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if (!header) return;
         
-        if (targetSection) {
-            const headerHeight = document.querySelector('.header').offsetHeight;
-            const targetPosition = targetSection.offsetTop - headerHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
+        if (window.scrollY > 100) {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+            header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            header.style.boxShadow = 'none';
         }
     });
-});
 
-// Header background on scroll
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.header');
-    if (window.scrollY > 100) {
-        header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-        header.style.boxShadow = 'none';
-    }
-});
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
+    // Observe elements for animation
+    const animateElements = document.querySelectorAll('.service-card, .product-card, .feature, .contact-item');
+    animateElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
     });
-}, observerOptions);
 
-// Observe elements for animation
-const animateElements = document.querySelectorAll('.service-card, .product-card, .feature, .contact-item');
-animateElements.forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-});
+    // Form handling - Removed fake handler to use the real one below
 
-// Form handling
-const contactForm = document.querySelector('.form');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(contactForm);
-        const name = contactForm.querySelector('input[type="text"]').value;
-        const email = contactForm.querySelector('input[type="email"]').value;
-        const phone = contactForm.querySelector('input[type="tel"]').value;
-        const service = contactForm.querySelector('select').value;
-        const message = contactForm.querySelector('textarea').value;
-        
-        // Basic validation
-        if (!name || !email || !phone || !service || !message) {
-            showNotification('Por favor, preencha todos os campos.', 'error');
-            return;
-        }
-        
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showNotification('Por favor, insira um e-mail válido.', 'error');
-            return;
-        }
-        
-        // Phone validation (Brazilian format)
-        const phoneRegex = /^\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}$/;
-        if (!phoneRegex.test(phone)) {
-            showNotification('Por favor, insira um telefone válido.', 'error');
-            return;
-        }
-        
-        // Simulate form submission
-        const submitBtn = contactForm.querySelector('.btn-primary');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Enviando...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            showNotification('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
-            contactForm.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
-    });
-}
+}); // End of first DOMContentLoaded block
 
 // Notification system
 function showNotification(message, type = 'info') {
@@ -217,115 +184,204 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 
-// Product availability buttons
-const availabilityButtons = document.querySelectorAll('.product-card .btn-outline');
-availabilityButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault();
-        const productName = button.closest('.product-card').querySelector('.product-name').textContent;
-        showNotification(`Entre em contato conosco para verificar a disponibilidade do ${productName}.`, 'info');
-        
-        // Scroll to contact section
-        setTimeout(() => {
-            const contactSection = document.querySelector('#contact');
-            const headerHeight = document.querySelector('.header').offsetHeight;
-            const targetPosition = contactSection.offsetTop - headerHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }, 1000);
-    });
-});
-
-// WhatsApp integration
-function openWhatsApp(phone, message = '') {
-    const cleanPhone = phone.replace(/\D/g, '');
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/55${cleanPhone}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-}
-
-// Add WhatsApp click handlers
-const whatsappContacts = document.querySelectorAll('.contact-item');
-whatsappContacts.forEach(item => {
-    const icon = item.querySelector('.fa-whatsapp');
-    if (icon) {
-        item.style.cursor = 'pointer';
-        item.addEventListener('click', () => {
-            const phoneText = item.querySelector('.contact-details p').textContent;
-            const phone = phoneText.split('|')[0].trim(); // Get first phone number
-            const message = 'Olá! Gostaria de saber mais sobre os serviços da Repair Apple Maceió.';
-            openWhatsApp(phone, message);
-        });
-    }
-});
-
-// Instagram integration
-const instagramContact = document.querySelector('.fa-instagram');
-if (instagramContact) {
-    instagramContact.closest('.contact-item').style.cursor = 'pointer';
-    instagramContact.closest('.contact-item').addEventListener('click', () => {
-        window.open('https://instagram.com/repairapplemaceio', '_blank');
-    });
-}
-
-// Email integration
-const emailContact = document.querySelector('.fa-envelope');
-if (emailContact) {
-    emailContact.closest('.contact-item').style.cursor = 'pointer';
-    emailContact.closest('.contact-item').addEventListener('click', () => {
-        const email = 'repairapplemaceio@hotmail.com';
-        const subject = 'Contato - Repair Apple Maceió';
-        const body = 'Olá! Gostaria de saber mais sobre os serviços da Repair Apple Maceió.';
-        window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    });
-}
-
-// Lazy loading for images (if any are added later)
-if ('IntersectionObserver' in window) {
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                imageObserver.unobserve(img);
+document.addEventListener('DOMContentLoaded', () => {
+    // Product availability buttons
+    const availabilityButtons = document.querySelectorAll('.product-card .btn-outline');
+    availabilityButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const productCard = button.closest('.product-card');
+            if (productCard) {
+                const productNameEl = productCard.querySelector('.product-name');
+                const productName = productNameEl ? productNameEl.textContent : 'Produto';
+                showNotification(`Entre em contato conosco para verificar a disponibilidade do ${productName}.`, 'info');
+                
+                // Scroll to contact section
+                setTimeout(() => {
+                    const contactSection = document.querySelector('#contact');
+                    const header = document.querySelector('.header');
+                    
+                    if (contactSection) {
+                        const headerHeight = header ? header.offsetHeight : 0;
+                        const targetPosition = contactSection.offsetTop - headerHeight;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }, 1000);
             }
         });
     });
-    
-    const lazyImages = document.querySelectorAll('img[data-src]');
-    lazyImages.forEach(img => imageObserver.observe(img));
-}
 
-// Performance optimization: Debounce scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Apply debounce to scroll handler
-const debouncedScrollHandler = debounce(() => {
-    const header = document.querySelector('.header');
-    if (window.scrollY > 100) {
-        header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-        header.style.boxShadow = 'none';
+    // WhatsApp integration
+    function openWhatsApp(phone, message = '') {
+        const cleanPhone = phone.replace(/\D/g, '');
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/55${cleanPhone}?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
     }
-}, 10);
 
-window.addEventListener('scroll', debouncedScrollHandler);
+    // Add WhatsApp click handlers
+    const whatsappContacts = document.querySelectorAll('.contact-item');
+    whatsappContacts.forEach(item => {
+        const icon = item.querySelector('.fa-whatsapp');
+        if (icon) {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', () => {
+                const contactDetails = item.querySelector('.contact-details p');
+                if (contactDetails) {
+                    const phoneText = contactDetails.textContent;
+                    const phone = phoneText.split('|')[0].trim(); // Get first phone number
+                    const message = 'Olá! Gostaria de saber mais sobre os serviços da Repair Apple Maceió.';
+                    openWhatsApp(phone, message);
+                }
+            });
+        }
+    });
+
+    // Contact Form Handling
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        // Check if running on file protocol
+        if (window.location.protocol === 'file:') {
+            const warningDiv = document.createElement('div');
+            warningDiv.style.cssText = 'background: #ffeba7; color: #5a4a08; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #c9b466; font-weight: bold;';
+            warningDiv.innerHTML = '⚠️ Atenção: O formulário não funciona abrindo o arquivo direto. Por favor, acesse pelo endereço <a href="http://localhost:8000" style="color: #000; text-decoration: underline;">http://localhost:8000</a>';
+            contactForm.parentNode.insertBefore(warningDiv, contactForm);
+        }
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('Form submission started');
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Enviando...';
+            submitBtn.disabled = true;
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            console.log('Sending data:', data);
+            
+            try {
+                // Ensure we use the full URL to avoid ambiguity
+                const apiUrl = window.location.origin + '/api/contact';
+                console.log('Target URL:', apiUrl);
+
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                console.log('Response:', result);
+                
+                if (response.ok) {
+                    if (typeof showNotification === 'function') {
+                        showNotification(result.message || 'Mensagem enviada com sucesso!', 'success');
+                    } else {
+                        alert(result.message || 'Mensagem enviada com sucesso!');
+                    }
+                    this.reset();
+                } else {
+                    throw new Error(result.error || 'Erro do servidor');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                const errorMsg = 'Erro: ' + error.message + '\n\nVerifique se você está acessando por http://localhost:8000';
+                if (typeof showNotification === 'function') {
+                    showNotification(errorMsg, 'error');
+                } else {
+                    alert(errorMsg);
+                }
+            } finally {
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+
+    // Instagram integration
+    const instagramContact = document.querySelector('.fa-instagram');
+    if (instagramContact) {
+        const contactItem = instagramContact.closest('.contact-item');
+        if (contactItem) {
+            contactItem.style.cursor = 'pointer';
+            contactItem.addEventListener('click', () => {
+                window.open('https://instagram.com/repairapplemaceio', '_blank');
+            });
+        }
+    }
+
+    // Email integration
+    const emailContact = document.querySelector('.fa-envelope');
+    if (emailContact) {
+        const contactItem = emailContact.closest('.contact-item');
+        if (contactItem) {
+            contactItem.style.cursor = 'pointer';
+            contactItem.addEventListener('click', () => {
+                const email = 'repairapplemaceio@hotmail.com';
+                const subject = 'Contato - Repair Apple Maceió';
+                const body = 'Olá! Gostaria de saber mais sobre os serviços da Repair Apple Maceió.';
+                window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            });
+        }
+    }
+
+    // Lazy loading for images (if any are added later)
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                }
+            });
+        });
+        
+        const lazyImages = document.querySelectorAll('img[data-src]');
+        lazyImages.forEach(img => imageObserver.observe(img));
+    }
+
+    // Performance optimization: Debounce scroll events
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Apply debounce to scroll handler
+    const debouncedScrollHandler = debounce(() => {
+        const header = document.querySelector('.header');
+        if (!header) return;
+        
+        if (window.scrollY > 100) {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.98)';
+            header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        } else {
+            header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            header.style.boxShadow = 'none';
+        }
+    }, 10);
+
+    window.addEventListener('scroll', debouncedScrollHandler);
+});
 
 // Shopping Cart Functionality
 class ShoppingCart {
@@ -568,7 +624,10 @@ class ShoppingCart {
 }
 
 // Initialize cart
-const cart = new ShoppingCart();
+let cart;
+document.addEventListener('DOMContentLoaded', () => {
+    cart = new ShoppingCart();
+});
 
 // Helper function to add products to cart
 function addToCart(productId, productName, productPrice) {
@@ -966,9 +1025,14 @@ function closeImageModal() {
 }
 
 // Close modal when clicking outside the image
-document.getElementById('imageModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeImageModal();
+document.addEventListener('DOMContentLoaded', () => {
+    const imageModal = document.getElementById('imageModal');
+    if (imageModal) {
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeImageModal();
+            }
+        });
     }
 });
 
@@ -988,4 +1052,18 @@ document.addEventListener('DOMContentLoaded', function() {
             openImageModal(this.src, this.alt);
         });
     });
+});
+
+// Hero Carousel
+document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.carousel-slide');
+    let currentSlide = 0;
+
+    if (slides.length > 0) {
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000); // Change every 5 seconds
+    }
 });

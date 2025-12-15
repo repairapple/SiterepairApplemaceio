@@ -63,6 +63,11 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero">
+        <div class="hero-carousel">
+            <div class="carousel-slide active" style="background-image: url('https://s.zst.com.br/cms-assets/2021/10/produtos-apple.jpg');"></div>
+            <div class="carousel-slide" style="background-image: url('Img/background-replacement.jpg');"></div>
+            <div class="carousel-slide" style="background-image: url('Img/background-real.jpg?v=2');"></div>
+        </div>
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">Assistência Técnica Especializada em <span class="highlight">Apple</span></h1>
@@ -503,18 +508,18 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form class="form">
+                    <form class="form" id="contactForm">
                         <div class="form-group">
-                            <input type="text" class="form-input" placeholder="Seu nome" required>
+                            <input type="text" name="name" class="form-input" placeholder="Seu nome" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-input" placeholder="Seu e-mail" required>
+                            <input type="email" name="email" class="form-input" placeholder="Seu e-mail" required>
                         </div>
                         <div class="form-group">
-                            <input type="tel" class="form-input" placeholder="Seu telefone" required>
+                            <input type="tel" name="phone" class="form-input" placeholder="Seu telefone" required>
                         </div>
                         <div class="form-group">
-                            <select class="form-input" required>
+                            <select name="service" class="form-input" required>
                                 <option value="">Selecione o serviço</option>
                                 <option value="iphone">Reparo de iPhone</option>
                                 <option value="ipad">Reparo de iPad</option>
@@ -524,7 +529,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-input" rows="4" placeholder="Descreva o problema ou sua necessidade" required></textarea>
+                            <textarea name="message" class="form-input" rows="4" placeholder="Descreva o problema ou sua necessidade" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-full">Enviar Mensagem</button>
                     </form>

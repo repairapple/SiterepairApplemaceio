@@ -489,12 +489,39 @@ p {
 /* Hero Section */
 .hero {
     padding: 120px 0 80px;
-    background: url('https://s.zst.com.br/cms-assets/2021/10/produtos-apple.jpg') center center / cover no-repeat, linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
     overflow: hidden;
+}
+
+.hero-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #000;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
 }
 
 .hero::before {
