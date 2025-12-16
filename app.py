@@ -71,6 +71,7 @@ def serve_static(path):
 @app.route('/api/contact', methods=['POST'])
 def contact():
     data = request.json
+    print(f"DEBUG: Received contact request: {data}")
     
     # Simple validation
     if not data or not all(k in data for k in ('name', 'email', 'message')):
@@ -84,7 +85,9 @@ def contact():
     }
     
     try:
-        messages_file = 'messages.json'
+        messages_file = os.path.abspath('messages.json')
+        print(f"DEBUG: Writing to file: {messages_file}")
+        
         messages = []
         
         if os.path.exists(messages_file):

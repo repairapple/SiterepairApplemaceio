@@ -294,6 +294,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 console.error('Error:', error);
+                
+                // Fallback inteligente para WhatsApp (caso esteja no GitHub Pages ou servidor offline)
+                const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+                
+                if (!isLocal || error.message.includes('Failed to fetch')) {
+                    const confirmWhatsapp = confirm('Nota: O painel administrativo funciona apenas no servidor local.\n\nDeseja enviar esta mensagem diretamente para o nosso WhatsApp?');
+                    
+                    if (confirmWhatsapp) {
+                        const messageText = `*Novo Contato via Site*\n\n*Nome:* ${data.name}\n*Email:* ${data.email}\n*Telefone:* ${data.phone}\n*Serviço:* ${data.service}\n*Mensagem:* ${data.message}`;
+                        // Número principal da loja (peguei do HTML: 82 9 9682.9318)
+                        const whatsappUrl = `https://wa.me/5582996829318?text=${encodeURIComponent(messageText)}`;
+                        window.open(whatsappUrl, '_blank');
+                        this.reset();
+                        submitBtn.textContent = originalBtnText;
+                        submitBtn.disabled = false;
+                        return;
+                    }
+                }
+
                 const errorMsg = 'Erro: ' + error.message + '\n\nVerifique se você está acessando por http://localhost:8000';
                 if (typeof showNotification === 'function') {
                     showNotification(errorMsg, 'error');
