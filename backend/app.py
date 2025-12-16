@@ -2,10 +2,20 @@ from flask import Flask, request, jsonify, send_from_directory, session, redirec
 import os
 import json
 from datetime import datetime
+from functools import wraps
 
 # Set the static folder to current directory
-app = Flask(__name__, static_folder='.')
-app.secret_key = 'sua_chave_secreta_aqui' # Chave para gerenciar sessões
+app = Flask(__name__, static_folder='../')
+app.secret_key = 'segredo_muito_seguro'  # Change this in production
+
+# --- Authentication Decorator ---
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
 
 # Configuração de Login
 ADMIN_USER = "admin"
@@ -62,11 +72,11 @@ def logout():
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('../', 'index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
-    return send_from_directory('.', path)
+    return send_from_directory('../', path)
 
 @app.route('/api/contact', methods=['POST'])
 def contact():
