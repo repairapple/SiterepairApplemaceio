@@ -244,14 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Contact Form Handling
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
-        // Check if running on file protocol
-        if (window.location.protocol === 'file:') {
-            const warningDiv = document.createElement('div');
-            warningDiv.style.cssText = 'background: #ffeba7; color: #5a4a08; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #c9b466; font-weight: bold;';
-            warningDiv.innerHTML = '⚠️ Atenção: O formulário não funciona abrindo o arquivo direto. Por favor, acesse pelo endereço <a href="http://localhost:8000" style="color: #000; text-decoration: underline;">http://localhost:8000</a>';
-            contactForm.parentNode.insertBefore(warningDiv, contactForm);
-        }
-
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             console.log('Form submission started');
