@@ -168,14 +168,15 @@ p {
 .nav-logo .logo-text::before {
     content: '';
     display: inline-block;
-    width: 64px;
-    height: 64px;
-    background-image: url('https://w7.pngwing.com/pngs/107/371/png-transparent-black-apple-logo-black-apple-icon-material-logo-material.png');
+    width: 35px;
+    height: 44px;
+    background-image: url('Logo/apple-icon.svg?v=2');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     margin-right: 0.5rem;
     vertical-align: middle;
+    margin-bottom: 5px;
 }
 
 .nav-menu {
@@ -854,14 +855,7 @@ section {
     }
 }
 
-.product-card {
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
-    border: 1px solid #f0f0f0;
-}
+
 
 .product-actions {
     display: flex;
@@ -942,8 +936,34 @@ section {
     border-radius: 8px;
 }
 
+/* Products Section */
+.products {
+    background-color: #f5f5f7;
+    padding: 80px 0;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+    border: 1px solid #f0f0f0;
+}
+
 .product-info {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .product-name {
@@ -951,13 +971,28 @@ section {
     font-weight: 600;
     color: #000;
     margin-bottom: 0.5rem;
+    text-align: center !important;
+    width: 100%;
+    display: block;
+}
+
+.titulo-produto {
+    text-align: center;
+    font-weight: 600;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
 }
 
 .product-description {
     color: #666;
     margin-bottom: 1rem;
     font-size: 0.9rem;
+    text-align: center;
+    width: 100%;
 }
+
+
 
 .product-price {
     font-size: 1.2rem;
