@@ -231,10 +231,30 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Get URL parameters
             const urlParams = new URLSearchParams(window.location.search);
-            const productName = urlParams.get('product');
-            const productPrice = urlParams.get('price');
-            const productImage = urlParams.get('image');
+            let productName = urlParams.get('product');
+            let productPrice = urlParams.get('price');
+            let productImage = urlParams.get('image');
             const originParam = urlParams.get('origin');
+            let productImages = urlParams.get('images');
+
+            // Check localStorage if URL params are missing
+            if (!productName) {
+                const storedProduct = localStorage.getItem('selectedProduct');
+                if (storedProduct) {
+                    try {
+                        const productData = JSON.parse(storedProduct);
+                        productName = productData.name;
+                        productPrice = productData.price;
+                        productImage = productData.image;
+                        // Handle images array if present in stored data (future proofing)
+                        if (productData.images) {
+                            productImages = productData.images.join(',');
+                        }
+                    } catch (e) {
+                        console.error('Error parsing stored product:', e);
+                    }
+                }
+            }
 
             // Update Back Link if origin exists
             if (originParam) {
@@ -260,7 +280,7 @@
             }
 
             // Handle Product Image(s)
-            const imagesParam = urlParams.get('images');
+            const imagesParam = productImages || urlParams.get('images');
             const imageContainer = document.querySelector('.detail-image-container');
 
             // Adjust image position: Move up for all products except Bombox 4

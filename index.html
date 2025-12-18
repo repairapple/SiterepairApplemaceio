@@ -182,6 +182,23 @@
                 <p class="section-subtitle">Dispositivos novos e seminovos com garantia</p>
             </div>
             <div class="products-grid">
+                <div class="product-card" id="iphone-air">
+                    <div class="product-image">
+                        <img src="Img/Iphone Air.jpg" alt="iPhone Air" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name titulo-produto">iPhone Air</h3>
+                        <p class="product-description" style="text-align: center !important;">Design ultra-fino e desempenho impressionante.</p>
+                        <div class="product-price" style="text-align: center !important;">A partir de R$ 6.999 ou 10x de
+                            <span class="installment-value">R$ 699,90</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary compare-product" data-product="iPhone Air" data-price="6999" data-image="Img/Iphone Air.jpg">Comprar</button>
+                            <button class="btn btn-primary add-to-cart" data-product="iPhone Air" data-price="6999" data-image="Img/Iphone Air.jpg">Adicionar ao Carrinho</button>
+                            <button class="btn btn-outline">Consultar Disponibilidade</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="product-card" id="iphone-15-pro">
                     <div class="product-image">
                         <img src="Img/iphone15pro-new.jpg" alt="iPhone 15 Pro" class="product-img">
@@ -286,17 +303,17 @@
                 </div>
                 <div class="product-card" id="iphone-17-pro-max">
                     <div class="product-image">
-                        <img src="Img/macbook-pro-m4.jpg" alt="Iphone 17 pro Max" class="product-img">
+                        <img src="Img/iphone-17-pro-max-apple.webp" alt="Iphone 17 pro Max" class="product-img">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name titulo-produto">Iphone 17 pro Max</h3>
-                        <p class="product-description" style="text-align: center !important;">O notebook mais poderoso da Apple com chip M4.</p>
+                        <p class="product-description" style="text-align: center !important;">O mais avançado iPhone já criado, com design inovador e performance extrema.</p>
                         <div class="product-price" style="text-align: center !important;">A partir de R$ 8.900 ou 10x de
                             <span class="installment-value">R$ 890,00</span>
                         </div>
                         <div class="product-actions">
-                            <button class="btn btn-primary compare-product" data-product="Iphone 17 pro Max" data-price="8900" data-image="Img/macbook-pro-m4.jpg">Comprar</button>
-                            <button class="btn btn-primary add-to-cart" data-product="Iphone 17 pro Max" data-price="8900" data-image="Img/macbook-pro-m4.jpg">Adicionar ao Carrinho</button>
+                            <button class="btn btn-primary compare-product" data-product="Iphone 17 pro Max" data-price="8900" data-image="Img/iphone-17-pro-max-apple.webp">Comprar</button>
+                            <button class="btn btn-primary add-to-cart" data-product="Iphone 17 pro Max" data-price="8900" data-image="Img/iphone-17-pro-max-apple.webp">Adicionar ao Carrinho</button>
                             <button class="btn btn-outline">Consultar Disponibilidade</button>
                         </div>
                     </div>
@@ -341,6 +358,28 @@
                         </div>
                     </div>
                 </div>
+                <div class="product-card" id="xbox-series-x">
+                    <div class="product-image">
+                        <img src="Img/xbox-series-x-digital.webp" alt="Xbox Series X" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name titulo-produto">Xbox Series X</h3>
+                        <p class="product-description" style="text-align: center !important;">O console mais rápido e poderoso de todos os tempos.</p>
+                        <div class="product-price" style="text-align: center !important;">A partir de R$ 4.500 ou 10x de
+                            <span class="installment-value">R$ 450,00</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary compare-product" data-product="Xbox Series X" data-price="4500" data-image="Img/xbox-series-x-digital.webp">Comprar</button>
+                            <button class="btn btn-primary add-to-cart" data-product="Xbox Series X" data-price="4500" data-image="Img/xbox-series-x-digital.webp">Adicionar ao Carrinho</button>
+                            <button class="btn btn-outline">Consultar Disponibilidade</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="products-pagination" style="text-align: center; margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; align-items: center;">
+                <button id="prev-products" class="btn btn-outline" style="display: none;">&larr; Anterior</button>
+                <span id="page-indicator" style="font-weight: bold;"></span>
+                <button id="next-products" class="btn btn-primary">Próximo &rarr;</button>
             </div>
         </div>
     </section>
@@ -496,12 +535,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="about-image">
-                    <img src="Img/certificado-tecnico.png" alt="Certificado Técnico Repair Apple Maceió" class="about-img">
+                <div class="about-image certificate-carousel">
+                    <button class="cert-btn cert-prev">&#10094;</button>
+                    <div class="cert-images">
+                        <img src="Img/certificado 1.jpg" alt="Certificado Técnico 1" class="cert-img active">
+                        <img src="Img/certificado 2.jpg" alt="Certificado Técnico 2" class="cert-img">
+                        <img src="Img/Certificado 3.jpg" alt="Certificado Técnico 3" class="cert-img">
+                        <img src="Img/Certificado 4.jpg" alt="Certificado Técnico 4" class="cert-img">
+                    </div>
+                    <button class="cert-btn cert-next">&#10095;</button>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Certificate Modal -->
+    <div id="certificate-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">

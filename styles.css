@@ -1186,6 +1186,82 @@ section {
     gap: 1.5rem;
 }
 
+/* Certificate Carousel */
+.certificate-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 500px; /* Ajuste conforme necessário */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cert-images {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.cert-img {
+    width: 100%;
+    height: auto;
+    display: none;
+    /* cursor: pointer; removed to indicate not clickable */
+    transition: transform 0.3s ease;
+}
+
+.cert-img.active {
+    display: block;
+    animation: fadeEffect 0.5s;
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0.4} 
+    to {opacity: 1}
+}
+
+.cert-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    transition: 0.3s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: transparent;
+    border: none;
+    z-index: 10;
+    opacity: 0; /* Hidden by default */
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+}
+
+.certificate-carousel:hover .cert-btn {
+    opacity: 1; /* Show on hover */
+}
+
+.cert-next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.cert-prev {
+    left: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.cert-btn:hover {
+    background-color: transparent;
+    transform: scale(1.2);
+}
+
 .feature {
     display: flex;
     gap: 1rem;
