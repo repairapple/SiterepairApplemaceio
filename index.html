@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Repair Apple Maceió - Assistência Técnica Especializada</title>
     <meta name="description" content="Assistência técnica especializada em produtos Apple em Maceió. Reparo de iPhone, iPad, MacBook e mais. Qualidade e confiança garantidas.">
-    <link rel="stylesheet" href="styles.css?v=2.6">
+    <link rel="stylesheet" href="styles.css?v=3.1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,9 @@
         <nav class="nav">
             <div class="nav-container">
                 <div class="nav-logo">
-                    <span class="logo-text">REPAIR APPLE MACEIÓ</span>
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                        <span class="logo-text">REPAIR APPLE MACEIÓ</span>
+                    </a>
                 </div>
                 <ul class="nav-menu">
                     <li><a href="#home" class="nav-link">Início</a></li>
@@ -91,7 +93,7 @@
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
-                        <img src="Img/iphone15pro-new.jpg" alt="iPhone" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                        <img src="Img/iphone-15.webp" alt="iPhone" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                     </div>
                     <h3 class="service-title">Reparo de iPhone</h3>
                     <p class="service-description">Troca de tela, bateria, câmera, alto-falante e todos os componentes do seu iPhone com peças originais.</p>
@@ -130,7 +132,7 @@
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
-                        <img src="Img/macbookair-new.jpg" alt="MacBook" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                        <img src="Img/macbook pro.webp" alt="MacBook" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                     </div>
                     <h3 class="service-title">Reparo de MacBook</h3>
                     <p class="service-description">Manutenção especializada em MacBooks, iMacs e Mac mini. Upgrade de SSD, memória e limpeza interna.</p>
@@ -143,7 +145,7 @@
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
-                        <img src="Img/applewatchultra-new.jpg" alt="Apple Watch" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                        <img src="Img/apple watch.jpg" alt="Apple Watch" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
                     </div>
                     <h3 class="service-title">Reparo de Apple Watch</h3>
                     <p class="service-description">Conserto de tela quebrada, troca de bateria e sensores do seu Apple Watch de todas as séries.</p>
@@ -180,7 +182,7 @@
                 <p class="section-subtitle">Dispositivos novos e seminovos com garantia</p>
             </div>
             <div class="products-grid">
-                <div class="product-card">
+                <div class="product-card" id="iphone-15-pro">
                     <div class="product-image">
                         <img src="Img/iphone15pro-new.jpg" alt="iPhone 15 Pro" class="product-img">
                     </div>
@@ -197,7 +199,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="ipad-air">
                     <div class="product-image">
                         <img src="Img/ipadair-new.jpg" alt="iPad Air" class="product-img">
                     </div>
@@ -214,7 +216,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="macbook-air-m2">
                     <div class="product-image">
                         <img src="Img/macbookair-new.jpg" alt="MacBook Air M2" class="product-img">
                     </div>
@@ -231,7 +233,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="iphone-16-pro-max">
                     <div class="product-image">
                         <img src="Img/iphone16promax-new.jpg" alt="iPhone 16 Pro Max" class="product-img">
                     </div>
@@ -248,7 +250,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="apple-watch-ultra">
                     <div class="product-image">
                         <img src="Img/applewatchultra-new.jpg" alt="Apple Watch Ultra" class="product-img">
                     </div>
@@ -265,7 +267,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="iphone-xs-max">
                     <div class="product-image">
                         <img src="Img/iphonexsmax-new.jpg" alt="iPhone XS Max" class="product-img">
                     </div>
@@ -282,7 +284,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="iphone-17-pro-max">
                     <div class="product-image">
                         <img src="Img/macbook-pro-m4.jpg" alt="Iphone 17 pro Max" class="product-img">
                     </div>
@@ -299,6 +301,46 @@
                         </div>
                     </div>
                 </div>
+                <div class="product-card" id="bombox-4">
+                     <div class="product-image product-carousel">
+                         <button class="carousel-btn prev-btn">&#10094;</button>
+                         <div class="carousel-images">
+                            <img src="Img/bombox 4.jpg" alt="Bombox 4" class="product-img active">
+                    <img src="Img/bomboxx4.webp" alt="Bombox 4 Preta" class="product-img">
+                    <img src="Img/bombox 4 branca.webp" alt="Bombox 4 Branca" class="product-img">
+                </div>
+                         <button class="carousel-btn next-btn">&#10095;</button>
+                     </div>
+                     <div class="product-info">
+                        <h3 class="product-name titulo-produto">Bombox 4</h3>
+                        <p class="product-description" style="text-align: center !important;">Som potente e design portátil para levar a festa a qualquer lugar.</p>
+                        <div class="product-price" style="text-align: center !important;">A partir de R$ 2.800 ou 10x de
+                            <span class="installment-value">R$ 280,00</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary compare-product" data-product="Bombox 4" data-price="2800" data-image="Img/bombox 4.jpg">Comprar</button>
+                            <button class="btn btn-primary add-to-cart" data-product="Bombox 4" data-price="2800" data-image="Img/bombox 4.jpg">Adicionar ao Carrinho</button>
+                            <button class="btn btn-outline">Consultar Disponibilidade</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" id="ps5-slim">
+                    <div class="product-image">
+                        <img src="Img/ps5 slim.webp" alt="PS5 Slim" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name titulo-produto">PlayStation 5 Slim</h3>
+                        <p class="product-description" style="text-align: center !important;">Design mais fino, mesma potência imersiva.</p>
+                        <div class="product-price" style="text-align: center !important;">A partir de R$ 3.800 ou 10x de
+                            <span class="installment-value">R$ 380,00</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary compare-product" data-product="PlayStation 5 Slim" data-price="3800" data-image="Img/ps5 slim.webp">Comprar</button>
+                            <button class="btn btn-primary add-to-cart" data-product="PlayStation 5 Slim" data-price="3800" data-image="Img/ps5 slim.webp">Adicionar ao Carrinho</button>
+                            <button class="btn btn-outline">Consultar Disponibilidade</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -309,7 +351,7 @@
             <h2 class="section-title">Acessórios Apple</h2>
             <p class="section-subtitle">Complemente sua experiência Apple com nossos acessórios originais</p>
             <div class="products-grid">
-                <div class="product-card">
+                <div class="product-card" id="ipod-3">
                     <div class="product-image">
                         <img src="Img/Airpods-3.webp" alt="iPod 3" class="product-img">
                     </div>
@@ -326,7 +368,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="carregador-usb-c">
                     <div class="product-image">
                         <img src="Img/carregador-cabo-turbo-20w-tipo-c.jpg" alt="Carregador USB-C Apple" class="product-img">
                     </div>
@@ -343,7 +385,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="magsafe">
                     <div class="product-image">
                         <img src="Img/Megasafe.webp" alt="MagSafe" class="product-img">
                     </div>
@@ -360,7 +402,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="airpods-pro">
                     <div class="product-image">
                         <img src="Img/airpods-pro.jpg" alt="AirPods Pro" class="product-img">
                     </div>
@@ -377,7 +419,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="cabo-lightning">
                     <div class="product-image">
                         <img src="Img/cable-lightning.jpg" alt="Cabo Lightning" class="product-img">
                     </div>
@@ -394,7 +436,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card">
+                <div class="product-card" id="apple-pencil">
                     <div class="product-image">
                         <img src="Img/apple-pencil.jpg" alt="Apple Pencil" class="product-img">
                     </div>
@@ -613,8 +655,9 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="Logo/logo.svg" alt="Repair Apple Maceió" class="logo">
-                    </div>
+                    <img src="Logo/apple-icon-white.svg" alt="Repair Apple Maceió" class="footer-icon">
+                    <span class="footer-logo-text">Repair Apple Maceió</span>
+                </div>
                     <p class="footer-description">Assistência técnica especializada em produtos Apple em Maceió. Qualidade e confiança garantidas.</p>
                 </div>
                 <div class="footer-section">
@@ -650,6 +693,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=3.2"></script>
 </body>
 </html>

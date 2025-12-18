@@ -893,11 +893,72 @@ section {
 
 .product-image {
     height: 200px;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    position: relative; /* Added for carousel positioning */
+}
+
+/* Product Carousel Styles */
+.product-carousel .carousel-images {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-carousel .product-img {
+    display: none; /* Hide all by default */
+}
+
+.product-carousel .product-img.active {
+    display: block; /* Show only active */
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    opacity: 0; /* Hidden by default */
+}
+
+.product-image:hover .carousel-btn {
+    opacity: 1; /* Show on hover */
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+.prev-btn {
+    left: 5px;
+}
+
+.next-btn {
+    right: 5px;
 }
 
 .product-img {
@@ -1575,10 +1636,23 @@ textarea.form-input {
     margin-bottom: 2rem;
 }
 
-.footer-logo .logo {
-    height: 40px;
-    width: auto;
+.footer-logo {
+    display: flex;
+    align-items: center;
     margin-bottom: 1rem;
+}
+
+.footer-icon {
+    height: 35px;
+    width: auto;
+    margin-right: 0.8rem;
+}
+
+.footer-logo-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
 }
 
 .footer-description {

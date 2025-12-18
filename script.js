@@ -100,7 +100,86 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
+    // Product Carousel Logic
+    const carousels = document.querySelectorAll('.product-carousel');
+    
+    carousels.forEach(carousel => {
+        const images = carousel.querySelectorAll('.product-img');
+        const prevBtn = carousel.querySelector('.prev-btn');
+        const nextBtn = carousel.querySelector('.next-btn');
+        let currentIndex = 0;
+        
+        // Only initialize if there are multiple images
+        if (images.length > 1) {
+            const showImage = (index) => {
+                images.forEach(img => img.classList.remove('active'));
+                images[index].classList.add('active');
+
+                // Update buttons with selected image
+                const productCard = carousel.closest('.product-card');
+                if (productCard) {
+                    const newImageSrc = images[index].getAttribute('src');
+                    const buyBtn = productCard.querySelector('.compare-product');
+                    const cartBtn = productCard.querySelector('.add-to-cart');
+                    
+                    if (buyBtn) buyBtn.setAttribute('data-image', newImageSrc);
+                    if (cartBtn) cartBtn.setAttribute('data-image', newImageSrc);
+                }
+            };
+            
+            prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent triggering card click if any
+                currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+                showImage(currentIndex);
+            });
+            
+            nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+                showImage(currentIndex);
+            });
+        } else {
+            // Hide buttons if only one image or none
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+        }
+    });
+
     // Form handling - Removed fake handler to use the real one below
+
+    // Buy Button Logic (Redirect to compra.html)
+    const buyButtons = document.querySelectorAll('.compare-product');
+    buyButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const productName = button.getAttribute('data-product');
+            const productPrice = button.getAttribute('data-price');
+            const productImage = button.getAttribute('data-image');
+            
+            // Check for multiple images (carousel)
+            const productCard = button.closest('.product-card');
+            let imagesParam = '';
+            let originParam = '';
+            
+            if (productCard) {
+                // Get Product ID for return navigation
+                if (productCard.id) {
+                    originParam = `&origin=${encodeURIComponent(productCard.id)}`;
+                }
+
+                const carouselImages = productCard.querySelectorAll('.carousel-images .product-img');
+                if (carouselImages.length > 0) {
+                    const imageUrls = Array.from(carouselImages).map(img => img.getAttribute('src'));
+                    imagesParam = `&images=${encodeURIComponent(imageUrls.join(','))}`;
+                }
+            }
+            
+            // Redirect to compra.html with parameters
+            window.location.href = `compra.html?product=${encodeURIComponent(productName)}&price=${encodeURIComponent(productPrice)}&image=${encodeURIComponent(productImage)}${imagesParam}${originParam}`;
+        });
+    });
 
 }); // End of first DOMContentLoaded block
 
