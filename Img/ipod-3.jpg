@@ -1,0 +1,47 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ipodGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="screenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333333;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="wheelGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#f0f0f0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d0d0d0;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="#f8f9fa"/>
+  
+  <!-- iPod Body -->
+  <rect x="120" y="50" width="160" height="300" rx="25" ry="25" fill="url(#ipodGradient)" stroke="#cccccc" stroke-width="2"/>
+  
+  <!-- Screen -->
+  <rect x="140" y="80" width="120" height="80" rx="8" ry="8" fill="url(#screenGradient)"/>
+  
+  <!-- Apple Logo on Screen -->
+  <path d="M190 110 C190 105, 195 100, 200 100 C205 100, 210 105, 210 110 C210 115, 205 120, 200 120 C195 120, 190 115, 190 110 Z" fill="#ffffff" opacity="0.8"/>
+  <path d="M195 108 C195 106, 197 104, 200 104 C203 104, 205 106, 205 108" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Click Wheel -->
+  <circle cx="200" cy="230" r="60" fill="url(#wheelGradient)" stroke="#cccccc" stroke-width="1"/>
+  <circle cx="200" cy="230" r="45" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+  <circle cx="200" cy="230" r="20" fill="#f8f9fa" stroke="#d0d0d0" stroke-width="1"/>
+  
+  <!-- Control Buttons -->
+  <text x="200" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">MENU</text>
+  <text x="200" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#666">⏯</text>
+  <text x="160" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">⏮</text>
+  <text x="240" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">⏭</text>
+  
+  <!-- iPod Text -->
+  <text x="200" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#666">iPod</text>
+  
+  <!-- Reflection -->
+  <rect x="130" y="60" width="30" height="100" rx="15" ry="15" fill="#ffffff" opacity="0.3"/>
+</svg>

@@ -201,21 +201,31 @@ document.addEventListener('DOMContentLoaded', () => {
     compareButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             e.preventDefault();
+            const card = button.closest('.product-card');
+            const originId = card ? card.id : 'products';
+            const images = card
+                ? Array.from(card.querySelectorAll('.carousel-images img')).map(img => img.getAttribute('src')).filter(Boolean)
+                : [];
+
             const productData = {
                 name: button.dataset.product,
                 price: button.dataset.price,
-                image: button.dataset.image
+                image: button.dataset.image,
+                images: images.length ? images : undefined
             };
-            
-            // Store selected product in localStorage
-            localStorage.setItem('selectedProduct', JSON.stringify(productData));
-            
-            // Get product ID for scrolling back
-            const card = button.closest('.product-card');
-            const originId = card ? card.id : 'products';
 
-            // Redirect to compra.html
-            window.location.href = `compra.html?origin=${originId}`;
+            localStorage.setItem('selectedProduct', JSON.stringify(productData));
+
+            const params = new URLSearchParams();
+            params.set('product', productData.name || '');
+            params.set('price', productData.price || '');
+            params.set('image', productData.image || '');
+            params.set('origin', originId);
+            if (images.length > 1) {
+                params.set('images', images.join(','));
+            }
+
+            window.location.href = `compra.html?${params.toString()}`;
         });
     });
 });

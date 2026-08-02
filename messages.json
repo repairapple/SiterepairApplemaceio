@@ -1,0 +1,11 @@
+[
+  {
+    "id": "20260208100144",
+    "timestamp": "2026-02-08T10:01:44.116340",
+    "data": {
+      "name": "Verification Bot",
+      "email": "bot@test.com",
+      "message": "Server verification test."
+    }
+  }
+]

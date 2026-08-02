@@ -1,0 +1,53 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="chargerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cableGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#cccccc;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="#f8f9fa"/>
+  
+  <!-- Power Adapter -->
+  <rect x="150" y="120" width="100" height="80" rx="12" ry="12" fill="url(#chargerGradient)" stroke="#d0d0d0" stroke-width="1"/>
+  
+  <!-- USB-C Port -->
+  <rect x="175" y="200" width="50" height="8" rx="4" ry="4" fill="#333333"/>
+  <rect x="180" y="202" width="40" height="4" rx="2" ry="2" fill="#000000"/>
+  
+  <!-- Apple Logo -->
+  <path d="M190 150 C190 145, 195 140, 200 140 C205 140, 210 145, 210 150 C210 155, 205 160, 200 160 C195 160, 190 155, 190 150 Z" fill="#cccccc" opacity="0.8"/>
+  <path d="M195 148 C195 146, 197 144, 200 144 C203 144, 205 146, 205 148" fill="none" stroke="#cccccc" stroke-width="1" opacity="0.6"/>
+  
+  <!-- Power Indicator LED -->
+  <circle cx="200" cy="175" r="3" fill="#4CAF50" opacity="0.8"/>
+  
+  <!-- USB-C Cable -->
+  <path d="M200 208 Q200 230, 180 250 Q160 270, 140 290 Q120 310, 100 330" fill="none" stroke="url(#cableGradient)" stroke-width="8" stroke-linecap="round"/>
+  
+  <!-- Cable Connector -->
+  <rect x="90" y="325" width="20" height="10" rx="5" ry="5" fill="url(#connectorGradient)" stroke="#999999" stroke-width="1"/>
+  
+  <!-- Connector Details -->
+  <rect x="95" y="327" width="10" height="6" rx="1" ry="1" fill="#666666"/>
+  
+  <!-- Text Labels -->
+  <text x="200" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#666">USB-C</text>
+  <text x="200" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#999">20W Power Adapter</text>
+  
+  <!-- Reflection on Adapter -->
+  <rect x="160" y="130" width="20" height="40" rx="10" ry="10" fill="#ffffff" opacity="0.4"/>
+  
+  <!-- Shadow -->
+  <ellipse cx="200" cy="380" rx="80" ry="15" fill="#000000" opacity="0.1"/>
+</svg>
