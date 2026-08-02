@@ -18,7 +18,7 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-                        <span class="logo-text">REPAIR APPLE MACEIÓ</span>
+                        <span class="logo-text"><span class="brand-main">REPAIR APPLE</span><span class="brand-city">MACEIÓ</span></span>
                     </a>
                 </div>
                 <ul class="nav-menu">
@@ -79,7 +79,6 @@
                     <a href="#services" class="btn btn-secondary">Nossos Serviços</a>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -156,7 +155,6 @@
                         <li>Problemas de sincronização</li>
                     </ul>
                 </div>
-
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-tools"></i>
@@ -323,16 +321,16 @@
                 </div>
                 <div class="product-card" id="bombox-4">
                     <div class="discount-badge">20% OFF</div>
-                     <div class="product-image product-carousel">
-                         <button class="carousel-btn prev-btn">&#10094;</button>
-                         <div class="carousel-images">
+                    <div class="product-image product-carousel">
+                        <button class="carousel-btn prev-btn">&#10094;</button>
+                        <div class="carousel-images">
                             <img src="Img/bombox 4.jpg" alt="Bombox 4" class="product-img active">
-                    <img src="Img/bomboxx4.webp" alt="Bombox 4 Preta" class="product-img">
-                    <img src="Img/bombox 4 branca.webp" alt="Bombox 4 Branca" class="product-img">
-                </div>
-                         <button class="carousel-btn next-btn">&#10095;</button>
-                     </div>
-                     <div class="product-info">
+                            <img src="Img/bomboxx4.webp" alt="Bombox 4 Preta" class="product-img">
+                            <img src="Img/bombox 4 branca.webp" alt="Bombox 4 Branca" class="product-img">
+                        </div>
+                        <button class="carousel-btn next-btn">&#10095;</button>
+                    </div>
+                    <div class="product-info">
                         <h3 class="product-name titulo-produto">Bombox 4</h3>
                         <p class="product-description" style="text-align: center !important;">Som potente e design portátil para levar a festa a qualquer lugar.</p>
                         <div class="product-price" style="text-align: center !important;">
@@ -504,8 +502,6 @@
             </div>
         </div>
     </section>
-
-
 
     <!-- About Section -->
     <section id="about" class="about">
@@ -717,9 +713,9 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                    <img src="Logo/apple-icon-white.svg" alt="Repair Apple Maceió" class="footer-icon">
-                    <span class="footer-logo-text">Repair Apple Maceió</span>
-                </div>
+                        <img src="Logo/apple-icon-white.svg" alt="Repair Apple Maceió" class="footer-icon">
+                        <span class="footer-logo-text">Repair Apple Maceió</span>
+                    </div>
                     <p class="footer-description">Assistência técnica especializada em produtos Apple em Maceió. Qualidade e confiança garantidas.</p>
                 </div>
                 <div class="footer-section">
@@ -755,6 +751,47 @@
         </div>
     </div>
 
+    <!-- Availability Query Modal -->
+    <div id="availabilityModal" class="availability-modal-overlay">
+        <div class="availability-modal">
+            <button class="availability-modal-close">&times;</button>
+            <div class="availability-modal-header">
+                <div class="availability-modal-icon">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <h3>Consultar Disponibilidade</h3>
+                <p id="availabilityProductName" class="availability-product-name"></p>
+            </div>
+            <div class="availability-modal-body">
+                <p class="availability-modal-text">Escolha como deseja verificar a disponibilidade deste produto:</p>
+                <div class="availability-modal-options">
+                    <button id="availabilityWhatsappBtn" class="availability-option-btn whatsapp-option">
+                        <div class="option-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="option-content">
+                            <span class="option-title">Falar pelo WhatsApp</span>
+                            <span class="option-desc">Resposta rápida e direta</span>
+                        </div>
+                    </button>
+                    <button id="availabilityFormBtn" class="availability-option-btn form-option">
+                        <div class="option-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="option-content">
+                            <span class="option-title">Preencher Formulário</span>
+                            <span class="option-desc">Envie uma mensagem detalhada</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="availability-modal-footer">
+                <span class="availability-footer-note">Respondemos em até 24h úteis</span>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js?v=3.2"></script>
+    <script src="availability-modal.js?v=1.0"></script>
 </body>
 </html>
