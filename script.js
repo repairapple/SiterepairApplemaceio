@@ -82,6 +82,13 @@ class ShoppingCart {
                 }
             });
         }
+
+        // Checkout button
+        if (this.cartCheckout) {
+            this.cartCheckout.addEventListener('click', () => {
+                this.checkout();
+            });
+        }
     }
 
     addItem(product) {
@@ -168,6 +175,18 @@ class ShoppingCart {
         if (this.cartCheckout) {
             this.cartCheckout.disabled = this.items.length === 0;
         }
+    }
+
+    checkout() {
+        if (this.items.length === 0) return;
+
+        // Close cart dropdown
+        if (this.cartDropdown) {
+            this.cartDropdown.classList.remove('active');
+        }
+
+        // Redirect to checkout page
+        window.location.href = 'checkout.html';
     }
 }
 
