@@ -253,6 +253,7 @@ p {
 
 .cart-link {
     position: relative;
+    display: inline-block;
     color: #ffffff;
     font-size: 1.2rem;
     text-decoration: none;
