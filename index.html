@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Repair Apple Maceió - Assistência Técnica Especializada</title>
     <meta name="description" content="Assistência técnica especializada em produtos Apple em Maceió. Reparo de iPhone, iPad, MacBook e mais. Qualidade e confiança garantidas.">
-    <link rel="stylesheet" href="styles.css?v=3.2">
+    <link rel="stylesheet" href="styles.css?v=3.3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
                     <li><a href="#home" class="nav-link">Início</a></li>
                     <li><a href="#services" class="nav-link">Serviços</a></li>
                     <li><a href="#products" class="nav-link">Produtos</a></li>
-                    <li><a href="#credit-card" class="nav-link">Cartão</a></li>
+                    <li><a href="#credit-card" class="nav-link">Laboratório</a></li>
                     <li><a href="#about" class="nav-link">Sobre</a></li>
                     <li><a href="#contact" class="nav-link">Contato</a></li>
                 </ul>
@@ -397,8 +397,10 @@
     <!-- Accessories Section -->
     <section id="accessories" class="products accessories-section">
         <div class="container">
-            <h2 class="section-title">Acessórios Apple</h2>
-            <p class="section-subtitle">Complemente sua experiência Apple com nossos acessórios originais</p>
+            <div class="section-header" style="text-align: center !important;">
+                <h2 class="section-title" style="text-align: center !important;">Acessórios Apple</h2>
+                <p class="section-subtitle" style="text-align: center !important;">Complemente sua experiência Apple com nossos acessórios originais</p>
+            </div>
             <div class="products-grid">
                 <div class="product-card" id="ipod-3">
                     <div class="product-image">
@@ -641,70 +643,68 @@
         </div>
     </section>
 
-    <!-- Credit Card Section -->
-    <section id="credit-card" class="credit-card-section">
+    <!-- Trust / Lab Section -->
+    <section id="credit-card" class="trust-lab-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Cartão de Crédito Interativo</h2>
-                <p class="section-subtitle">Simule um cartão de crédito com validação em tempo real</p>
+                <h2 class="section-title">Conheça Nosso Laboratório</h2>
+                <p class="section-subtitle">Veja de perto onde seu dispositivo é reparado com todo cuidado e profissionalismo</p>
             </div>
-            <div class="credit-card-container">
-                <div class="credit-card">
-                    <div class="card-front" id="card-front">
-                        <div class="card-logo">
-                            <div class="logo-chip"></div>
-                            <div class="logo-brand" id="card-brand">VISA</div>
-                        </div>
-                        <div class="card-number" id="card-display-number">#### #### #### ####</div>
-                        <div class="card-info">
-                            <div class="card-holder">
-                                <span class="label">Nome do Titular</span>
-                                <span class="value" id="card-display-name">SEU NOME AQUI</span>
+
+            <div class="trust-lab-container">
+                <!-- Vídeo Principal -->
+                <div class="trust-lab-video-wrapper">
+                    <div class="trust-lab-video-placeholder" id="labVideoPlaceholder">
+                        <div class="video-placeholder-content">
+                            <div class="video-play-icon">
+                                <i class="fas fa-play"></i>
                             </div>
-                            <div class="card-expiry">
-                                <span class="label">Válido até</span>
-                                <span class="value" id="card-display-expiry">MM/AA</span>
-                            </div>
+                            <p class="video-placeholder-text">Vídeo do Laboratório</p>
+                            <p class="video-placeholder-hint">Adicione pelo YouTube: substitua o link abaixo</p>
                         </div>
                     </div>
-                    <div class="card-back" id="card-back">
-                        <div class="card-stripe"></div>
-                        <div class="card-cvv-area">
-                            <span class="cvv-label">CVV</span>
-                            <span class="cvv-value" id="card-display-cvv">###</span>
+                    <p class="video-note">Veja nossas instalações e conheça nossa equipe técnica especializada</p>
+                </div>
+
+                <!-- Cards de Confiança -->
+                <div class="trust-cards-grid">
+                    <div class="trust-card">
+                        <div class="trust-card-icon">
+                            <i class="fas fa-tools"></i>
                         </div>
-                        <div class="card-signature">
-                            <span id="card-signature-name">SEU NOME AQUI</span>
+                        <h3 class="trust-card-title">Equipamentos Profissionais</h3>
+                        <p class="trust-card-desc">Utilizamos ferramentas e equipamentos de última geração para diagnósticos precisos e reparos de qualidade.</p>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-card-icon">
+                            <i class="fas fa-user-graduate"></i>
                         </div>
+                        <h3 class="trust-card-title">Técnicos Especializados</h3>
+                        <p class="trust-card-desc">Nossa equipe possui anos de experiência e certificações em produtos Apple. Seu dispositivo está em boas mãos.</p>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-card-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 class="trust-card-title">Peças de Qualidade</h3>
+                        <p class="trust-card-desc">Trabalhamos apenas com peças originais ou de primeira linha, garantindo a durabilidade do reparo.</p>
+                    </div>
+                    <div class="trust-card">
+                        <div class="trust-card-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <h3 class="trust-card-title">Processo Transparente</h3>
+                        <p class="trust-card-desc">Acompanhe cada etapa: diagnóstico gratuito, orçamento sem compromisso e garantia de 90 dias em todos os serviços.</p>
                     </div>
                 </div>
-                <div class="credit-card-form">
-                    <form id="card-form">
-                        <div class="form-group">
-                            <label for="card-number">Número do Cartão</label>
-                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
-                            <div class="validation-message" id="number-validation"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="card-name">Nome do Titular</label>
-                            <input type="text" id="card-name" placeholder="Seu Nome Completo">
-                            <div class="validation-message" id="name-validation"></div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="card-expiry">Data de Validade</label>
-                                <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5">
-                                <div class="validation-message" id="expiry-validation"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="card-cvv">CVV</label>
-                                <input type="text" id="card-cvv" placeholder="123" maxlength="4">
-                                <div class="validation-message" id="cvv-validation"></div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary" id="validate-card">Validar Cartão</button>
-                        <div class="card-status" id="card-status"></div>
-                    </form>
+
+                <!-- Destaque de Garantia -->
+                <div class="trust-highlight">
+                    <div class="trust-highlight-badge">
+                        <i class="fas fa-shield-haltered"></i>
+                        <span>90 Dias de Garantia</span>
+                    </div>
+                    <p>Todos os reparos realizados em nosso laboratório possuem <strong>garantia de 90 dias</strong>. Seu dispositivo Apple merece o melhor cuidado.</p>
                 </div>
             </div>
         </div>
