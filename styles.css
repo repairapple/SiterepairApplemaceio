@@ -483,10 +483,26 @@ textarea.form-input { resize: vertical; min-height: 100px; }
     margin: 0 auto;
 }
 
-/* Video Placeholder */
+/* Video Placeholder & Real Video */
 .trust-lab-video-wrapper {
     margin-bottom: 3rem;
     text-align: center;
+}
+
+.trust-lab-video-wrapper-real {
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    aspect-ratio: 16 / 9;
+}
+
+.trust-lab-video-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
 }
 
 .trust-lab-video-placeholder {
