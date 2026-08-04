@@ -439,6 +439,14 @@
     <script src="script.js?v=3.2"></script>
     <script>
     (function() {
+        // ⚙️ CONFIGURAÇÃO: Altere para a URL do seu backend quando fizer deploy
+        // Exemplo Render: var API_BASE = 'https://seu-app.onrender.com';
+        var API_BASE = '';
+        // Se vazio, usa caminho relativo (funciona localmente ou se backend estiver no mesmo domínio)
+
+        function apiUrl(path) {
+            return API_BASE ? API_BASE + path : path;
+        }
         var cart = JSON.parse(localStorage.getItem('cartItems') || '[]');
         var content = document.getElementById('checkoutContent');
 
@@ -852,7 +860,7 @@
             localStorage.setItem('myOrders', JSON.stringify(orders));
 
             // Send order to server
-            fetch('/api/orders', {
+            fetch(apiUrl('/api/orders'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

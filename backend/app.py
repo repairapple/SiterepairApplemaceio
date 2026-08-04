@@ -6,7 +6,7 @@ from functools import wraps
 
 # Set the static folder to current directory
 app = Flask(__name__, static_folder='../')
-app.secret_key = 'segredo_muito_seguro'  # Change this in production
+app.secret_key = os.environ.get('SECRET_KEY', 'segredo_muito_seguro')
 
 # --- Authentication Decorator ---
 def login_required(f):
