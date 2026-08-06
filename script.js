@@ -89,6 +89,18 @@ class ShoppingCart {
                 this.checkout();
             });
         }
+
+        // Clear cart button
+        const cartClear = document.getElementById('cart-clear');
+        if (cartClear) {
+            cartClear.addEventListener('click', () => {
+                if (confirm('Tem certeza que deseja limpar todo o carrinho?')) {
+                    this.items = [];
+                    this.saveCart();
+                    this.updateCart();
+                }
+            });
+        }
     }
 
     addItem(product) {
@@ -174,6 +186,12 @@ class ShoppingCart {
         // Enable/disable checkout button
         if (this.cartCheckout) {
             this.cartCheckout.disabled = this.items.length === 0;
+        }
+
+        // Show/hide clear cart button
+        const cartClear = document.getElementById('cart-clear');
+        if (cartClear) {
+            cartClear.style.display = this.items.length > 0 ? 'block' : 'none';
         }
     }
 
