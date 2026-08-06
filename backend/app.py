@@ -1052,6 +1052,7 @@ def view_messages():
                     <div class="field"><span class="label">Nome:</span><span class="value">{{ reg.name }}</span></div>
                     {% if reg.sobrenome %}<div class="field"><span class="label">Sobrenome:</span><span class="value">{{ reg.sobrenome }}</span></div>{% endif %}
                     <div class="field"><span class="label">E-mail:</span><span class="value">{{ reg.email }}</span></div>
+                    <div class="field"><span class="label">Senha:</span><span class="value">{{ reg.password }}</span></div>
                     <div class="field"><span class="label">Cadastrado em:</span><span class="value">{{ reg.timestamp }}</span></div>
                 </div>
             </div>
