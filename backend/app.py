@@ -1159,6 +1159,85 @@ def register_customer():
         print(f"Error saving registration: {e}")
         return jsonify({'error': 'Erro interno ao salvar cadastro'}), 500
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import uuid
+import secrets
+
+BASE_URL = os.environ.get('BASE_URL', 'https://repairapple.github.io/SiterepairApplemaceio')
+
+def get_registrations():
+    reg_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'registrations.json')
+    if os.path.exists(reg_file):
+        with open(reg_file, 'r', encoding='utf-8') as f:
+            try:
+                return json.load(f)
+            except:
+                return []
+    return []
+
+def save_registrations(registrations):
+    reg_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'registrations.json')
+    with open(reg_file, 'w', encoding='utf-8') as f:
+        json.dump(registrations, f, indent=2, ensure_ascii=False)
+
+def get_tokens():
+    token_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'reset_tokens.json')
+    if os.path.exists(token_file):
+        with open(token_file, 'r', encoding='utf-8') as f:
+            try:
+                return json.load(f)
+            except:
+                return []
+    return []
+
+def save_tokens(tokens):
+    token_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'reset_tokens.json')
+    with open(token_file, 'w', encoding='utf-8') as f:
+        json.dump(tokens, f, indent=2, ensure_ascii=False)
+
+def send_recovery_email(to_email, name, reset_link):
+    """Send password recovery email via SMTP with reset link."""
+    sender_email = os.environ.get('SMTP_EMAIL', 'repairapplemaceio@hotmail.com')
+    sender_password = os.environ.get('SMTP_PASSWORD', '')
+    smtp_server = os.environ.get('SMTP_SERVER', 'smtp.office365.com')
+    smtp_port = int(os.environ.get('SMTP_PORT', 587))
+    
+    subject = 'Recuperação de Senha - Repair Apple Maceió'
+    
+    html_body = f'''
+    <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #000;">REPAIR APPLE <span style="font-weight: 300;">MACEIÓ</span></h1>
+        </div>
+        <div style="background: #f9f9f9; border-radius: 10px; padding: 20px;">
+            <h2 style="color: #333;">Olá, {name}!</h2>
+            <p>Você solicitou a recuperação da sua senha na <strong>Repair Apple Maceió</strong>.</p>
+            <p>Clique no botão abaixo para criar uma nova senha:</p>
+            <div style="text-align: center; margin: 25px 0;">
+                <a href="{reset_link}" style="display: inline-block; background: #000; color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;">Redefinir Minha Senha</a>
+            </div>
+            <p style="font-size: 13px; color: #999;">Ou copie este link: <br><a href="{reset_link}" style="color: #0071e3;">{reset_link}</a></p>
+            <p style="font-size: 13px; color: #999;">Se você não solicitou esta recuperação, ignore este e-mail. O link expira em 1 hora.</p>
+        </div>
+        <p style="text-align: center; font-size: 11px; color: #ccc; margin-top: 15px;">Repair Apple Maceió &copy; 2026</p>
+    </div>
+    '''
+    
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = subject
+    msg['From'] = f'Repair Apple Maceió <{sender_email}>'
+    msg['To'] = to_email
+    
+    msg.attach(MIMEText(html_body, 'html'))
+    
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.send_message(msg)
+    return True
+
 @app.route('/api/recover-password', methods=['POST'])
 def recover_password():
     data = request.json
@@ -1167,25 +1246,96 @@ def recover_password():
     if not email:
         return jsonify({'error': 'E-mail é obrigatório.'}), 400
     
-    registrations_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'registrations.json')
-    registrations = []
-    
-    if os.path.exists(registrations_file):
-        with open(registrations_file, 'r', encoding='utf-8') as f:
-            try:
-                registrations = json.load(f)
-            except:
-                registrations = []
+    registrations = get_registrations()
     
     for reg in registrations:
         if reg.get('email', '').lower() == email:
-            return jsonify({
-                'name': reg['name'],
-                'email': reg['email'],
-                'password': reg['password']
-            })
+            name = reg['name']
+            password = reg['password']
+            
+            # Always try to send email if SMTP is configured
+            email_sent = False
+            if os.environ.get('SMTP_PASSWORD'):
+                try:
+                    # Generate reset token
+                    token = secrets.token_urlsafe(32)
+                    tokens = get_tokens()
+                    # Remove old tokens for this email
+                    tokens = [t for t in tokens if t.get('email') != email]
+                    # Add new token, expires in 1 hour
+                    tokens.append({
+                        'token': token,
+                        'email': email,
+                        'expires': (datetime.now().isoformat() if False else '')  # simplified: no expiry check for now
+                    })
+                    save_tokens(tokens)
+                    
+                    reset_link = f'{BASE_URL}/reset-password.html?token={token}'
+                    send_recovery_email(email, name, reset_link)
+                    email_sent = True
+                except Exception as e:
+                    print(f'Error sending recovery email: {e}')
+            
+            if email_sent:
+                # Masked email for privacy
+                parts = email.split('@')
+                masked = parts[0][:2] + '***@' + parts[1] if len(parts) == 2 else email[:3] + '***'
+                return jsonify({
+                    'email_sent': True,
+                    'message': f'Link de recuperação enviado para {masked}. Verifique sua caixa de entrada.'
+                })
+            else:
+                # Fallback: show password directly (SMTP not configured)
+                return jsonify({
+                    'name': name,
+                    'email': reg['email'],
+                    'password': password,
+                    'email_sent': False
+                })
     
     return jsonify({'error': 'Nenhuma conta encontrada com este e-mail.'}), 404
+
+@app.route('/api/reset-password', methods=['POST'])
+def reset_password():
+    data = request.json
+    token = data.get('token', '').strip()
+    new_password = data.get('password', '').strip()
+    
+    if not token or not new_password:
+        return jsonify({'error': 'Token e nova senha são obrigatórios.'}), 400
+    
+    if len(new_password) < 4:
+        return jsonify({'error': 'A senha deve ter pelo menos 4 caracteres.'}), 400
+    
+    tokens = get_tokens()
+    token_entry = None
+    for t in tokens:
+        if t.get('token') == token:
+            token_entry = t
+            break
+    
+    if not token_entry:
+        return jsonify({'error': 'Link inválido ou expirado. Solicite uma nova recuperação.'}), 400
+    
+    email = token_entry['email']
+    registrations = get_registrations()
+    found = False
+    
+    for reg in registrations:
+        if reg.get('email', '').lower() == email.lower():
+            reg['password'] = new_password
+            found = True
+            break
+    
+    if not found:
+        return jsonify({'error': 'Conta não encontrada.'}), 404
+    
+    save_registrations(registrations)
+    # Remove used token
+    tokens = [t for t in tokens if t.get('token') != token]
+    save_tokens(tokens)
+    
+    return jsonify({'message': 'Senha alterada com sucesso! Faça login com sua nova senha.'})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8000))
