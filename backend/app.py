@@ -4,8 +4,17 @@ import json
 from datetime import datetime
 from functools import wraps
 
-# Set the static folder to current directory
-app = Flask(__name__, static_folder='../')
+# Set the static folder to parent directory (local: SiteRepair/SiterepairApplemaceio/) or current dir (Render)
+import sys
+if os.environ.get('RENDER') or 'gunicorn' in sys.modules or not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'index.html')):
+    app = Flask(__name__, static_folder='../')
+else:
+    app = Flask(__name__, static_folder='../')
+
+# On Render, serve static files from the repo root as well
+STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+if not os.path.exists(os.path.join(STATIC_DIR, 'index.html')):
+    STATIC_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 app.secret_key = os.environ.get('SECRET_KEY', 'segredo_muito_seguro')
 
 # --- Authentication Decorator ---
