@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - Repair Apple Maceió</title>
+    <meta name="description" content="Recupere sua senha da Repair Apple Maceió.">
+    <link rel="stylesheet" href="styles.css?v=3.1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .recover-section {
+            padding: 120px 0 80px;
+            background-color: #f5f5f7;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .recover-container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .recover-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            background-color: #fff3cd;
+            color: #f39c12;
+        }
+        .recover-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1d1d1f;
+        }
+        .recover-text {
+            color: #86868b;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .form-group {
+            width: 100%;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #1d1d1f;
+            font-weight: 500;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d2d2d7;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .form-input:focus {
+            border-color: #0071e3;
+            outline: none;
+        }
+        .btn-full {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            margin-top: 0.5rem;
+            background-color: #000;
+            color: white;
+        }
+        .btn-full:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+        .btn-full:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .result-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 12px;
+            text-align: left;
+        }
+        .result-box.success {
+            display: block;
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+        }
+        .result-box.error {
+            display: block;
+            background: #ffebee;
+            border: 1px solid #ef9a9a;
+        }
+        .result-box .result-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        .result-box.success .result-title { color: #2e7d32; }
+        .result-box.error .result-title { color: #c62828; }
+        .result-box .result-content {
+            font-size: 0.9rem;
+            color: #333;
+            word-break: break-all;
+        }
+        .password-reveal {
+            background: #fff;
+            border: 2px dashed #4CAF50;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #86868b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #1d1d1f;
+        }
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                        <span class="logo-text"><span class="brand-main">REPAIR APPLE</span><span class="brand-city">MACEIÓ</span></span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html#home" class="nav-link">Início</a></li>
+                    <li><a href="index.html#products" class="nav-link">Produtos</a></li>
+                </ul>
+                <div class="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="recover-section">
+        <div class="recover-container">
+            <div class="recover-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2 class="recover-title">Esqueci minha senha</h2>
+            <p class="recover-text">Informe o e-mail cadastrado para recuperar sua senha.</p>
+            
+            <form id="recoverForm">
+                <div class="form-group">
+                    <label class="form-label">E-mail cadastrado *</label>
+                    <input type="email" id="recoverEmail" class="form-input" placeholder="seu@email.com" required>
+                </div>
+                <button type="submit" class="btn-full" id="recoverBtn">
+                    <i class="fas fa-search"></i> Buscar Senha
+                </button>
+            </form>
+            
+            <div class="result-box" id="resultBox">
+                <div class="result-title" id="resultTitle"></div>
+                <div class="result-content" id="resultContent"></div>
+                <div class="password-reveal" id="passwordReveal" style="display:none;"></div>
+            </div>
+            
+            <a href="login.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Voltar para o login
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="Logo/apple-icon-white.svg" alt="Repair Apple Maceió" class="footer-icon">
+                        <span class="footer-logo-text">Repair Apple Maceió</span>
+                    </div>
+                    <p class="footer-description">Assistência técnica especializada em produtos Apple em Maceió. Qualidade e confiança garantidas.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Contato</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-phone"></i> (82) 99682-9318</a></li>
+                        <li><a href="#"><i class="fas fa-envelope"></i> repairapplemaceio@hotmail.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Repair Apple Maceió. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Navigation Toggle
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                    const bars = navToggle.querySelectorAll('.bar');
+                    bars.forEach((bar, index) => {
+                        if (navMenu.classList.contains('active')) {
+                            if (index === 0) bar.style.transform = 'rotate(45deg) translate(5px, 5px)';
+                            if (index === 1) bar.style.opacity = '0';
+                            if (index === 2) bar.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+                        } else {
+                            bar.style.transform = 'none';
+                            bar.style.opacity = '1';
+                        }
+                    });
+                });
+            }
+
+            const form = document.getElementById('recoverForm');
+            const resultBox = document.getElementById('resultBox');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultContent = document.getElementById('resultContent');
+            const passwordReveal = document.getElementById('passwordReveal');
+            const btn = document.getElementById('recoverBtn');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('recoverEmail').value.trim();
+                
+                if (!email) {
+                    alert('Por favor, informe seu e-mail.');
+                    return;
+                }
+
+                // Reset
+                resultBox.className = 'result-box';
+                resultBox.style.display = 'none';
+                passwordReveal.style.display = 'none';
+                btn.innerHTML = '<span class="spinner"></span> Buscando...';
+                btn.disabled = true;
+
+                try {
+                    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                        ? 'http://127.0.0.1:8000' 
+                        : 'https://repair-apple-maceio.onrender.com';
+                    
+                    const response = await fetch(API_BASE + '/api/recover-password', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        resultBox.className = 'result-box success';
+                        resultTitle.textContent = 'Senha encontrada!';
+                        resultContent.textContent = `Cliente: ${result.name}`;
+                        passwordReveal.textContent = result.password;
+                        passwordReveal.style.display = 'block';
+                    } else {
+                        resultBox.className = 'result-box error';
+                        resultTitle.textContent = 'E-mail não encontrado';
+                        resultContent.textContent = result.error || 'Nenhuma conta cadastrada com este e-mail.';
+                    }
+                } catch (err) {
+                    resultBox.className = 'result-box error';
+                    resultTitle.textContent = 'Erro de conexão';
+                    resultContent.textContent = 'Não foi possível conectar ao servidor. Verifique sua internet e tente novamente.';
+                } finally {
+                    btn.innerHTML = '<i class="fas fa-search"></i> Buscar Senha';
+                    btn.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

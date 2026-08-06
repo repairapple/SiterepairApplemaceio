@@ -1159,6 +1159,34 @@ def register_customer():
         print(f"Error saving registration: {e}")
         return jsonify({'error': 'Erro interno ao salvar cadastro'}), 500
 
+@app.route('/api/recover-password', methods=['POST'])
+def recover_password():
+    data = request.json
+    email = data.get('email', '').strip().lower()
+    
+    if not email:
+        return jsonify({'error': 'E-mail é obrigatório.'}), 400
+    
+    registrations_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'registrations.json')
+    registrations = []
+    
+    if os.path.exists(registrations_file):
+        with open(registrations_file, 'r', encoding='utf-8') as f:
+            try:
+                registrations = json.load(f)
+            except:
+                registrations = []
+    
+    for reg in registrations:
+        if reg.get('email', '').lower() == email:
+            return jsonify({
+                'name': reg['name'],
+                'email': reg['email'],
+                'password': reg['password']
+            })
+    
+    return jsonify({'error': 'Nenhuma conta encontrada com este e-mail.'}), 404
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8000))
     app.run(host='0.0.0.0', port=port, debug=True)
