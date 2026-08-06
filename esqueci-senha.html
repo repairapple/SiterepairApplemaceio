@@ -296,6 +296,8 @@
                         ? 'http://127.0.0.1:8000' 
                         : 'https://repair-apple-maceio.onrender.com';
                     
+                    console.log('Enviando para:', API_BASE + '/api/recover-password');
+                    
                     const response = await fetch(API_BASE + '/api/recover-password', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -303,22 +305,29 @@
                     });
                     
                     const result = await response.json();
+                    console.log('Resposta:', result);
                     
-                    if (response.ok) {
+                    if (response.ok && result.password) {
                         resultBox.className = 'result-box success';
-                        resultTitle.textContent = 'Senha encontrada!';
-                        resultContent.textContent = `Cliente: ${result.name}`;
+                        resultBox.style.display = 'block';
+                        resultTitle.innerHTML = '✅ Senha encontrada!';
+                        resultContent.innerHTML = 'Cliente: <strong>' + result.name + '</strong>';
                         passwordReveal.textContent = result.password;
                         passwordReveal.style.display = 'block';
                     } else {
                         resultBox.className = 'result-box error';
-                        resultTitle.textContent = 'E-mail não encontrado';
-                        resultContent.textContent = result.error || 'Nenhuma conta cadastrada com este e-mail.';
+                        resultBox.style.display = 'block';
+                        resultTitle.innerHTML = '❌ ' + (result.error || 'E-mail não encontrado');
+                        resultContent.innerHTML = 'Nenhuma conta cadastrada com este e-mail. Verifique se digitou corretamente.';
+                        passwordReveal.style.display = 'none';
                     }
                 } catch (err) {
+                    console.error('Erro:', err);
                     resultBox.className = 'result-box error';
-                    resultTitle.textContent = 'Erro de conexão';
-                    resultContent.textContent = 'Não foi possível conectar ao servidor. Verifique sua internet e tente novamente.';
+                    resultBox.style.display = 'block';
+                    resultTitle.innerHTML = '❌ Erro de conexão';
+                    resultContent.innerHTML = 'Não foi possível conectar ao servidor. Verifique sua internet e tente novamente.<br><small>' + err.message + '</small>';
+                    passwordReveal.style.display = 'none';
                 } finally {
                     btn.innerHTML = '<i class="fas fa-search"></i> Buscar Senha';
                     btn.disabled = false;
