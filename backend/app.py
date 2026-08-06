@@ -11,6 +11,23 @@ if os.environ.get('RENDER') or 'gunicorn' in sys.modules or not os.path.exists(o
 else:
     app = Flask(__name__, static_folder='../')
 
+# CORS: allow cross-origin requests (GitHub Pages -> Render)
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+@app.before_request
+def handle_options():
+    if request.method == 'OPTIONS':
+        response = app.make_default_options_response()
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return response
+
 # On Render, serve static files from the repo root as well
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 if not os.path.exists(os.path.join(STATIC_DIR, 'index.html')):
