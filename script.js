@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Product Pagination
 document.addEventListener('DOMContentLoaded', function() {
-    const itemsPerPage = 4;
+    const itemsPerPage = 5;
     const productGrid = document.querySelector('#products .products-grid');
     if (!productGrid) return;
     
