@@ -422,6 +422,17 @@ def view_messages():
     
     # Sort by newest first
     messages.sort(key=lambda x: x['timestamp'], reverse=True)
+
+    # Load customer registrations
+    registrations = []
+    reg_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'registrations.json')
+    if os.path.exists(reg_file):
+        with open(reg_file, 'r', encoding='utf-8') as f:
+            try:
+                registrations = json.load(f)
+            except:
+                registrations = []
+    registrations.sort(key=lambda x: x['timestamp'], reverse=True)
     
     html = '''
     <!DOCTYPE html>
@@ -925,13 +936,17 @@ def view_messages():
                 <button class="tab-btn" data-tab="orders">
                     Pedidos<span class="tab-count">{{ orders|length }}</span>
                 </button>
+                <button class="tab-btn" data-tab="clients">
+                    Clientes<span class="tab-count">{{ registrations|length }}</span>
+                </button>
                 <button class="tab-btn" data-tab="contacts">
                     Contatos<span class="tab-count">{{ contacts|length }}</span>
                 </button>
             </div>
 
-            {% if messages %}
+            <!-- All Messages -->
             <div id="messagesList">
+            {% if messages %}
             {% for msg in messages %}
             <div class="message-card" data-type="{{ msg.type if msg.type == 'order' else 'contact' }}">
                 <div class="card-header">
@@ -983,15 +998,50 @@ def view_messages():
                 {% endif %}
             </div>
             {% endfor %}
-            </div>
             {% else %}
-            <div class="empty-state">
+            <div class="empty-state" id="emptyMessages">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
                 <p>Nenhuma mensagem recebida ainda.</p>
             </div>
             {% endif %}
+            </div>
+
+            <!-- Clients List -->
+            <div id="clientsList" style="display:none;">
+            {% if registrations %}
+            {% for reg in registrations %}
+            <div class="message-card client-card">
+                <div class="card-header">
+                    <div class="card-meta">
+                        <div>{{ reg.timestamp }}</div>
+                        <div class="meta-id">ID: {{ reg.id }}</div>
+                    </div>
+                    <div class="card-badge">
+                        <span class="badge" style="background: rgba(108,158,245,0.12); color: #6c9ef5; border: 1px solid rgba(108,158,245,0.25);">CLIENTE</span>
+                    </div>
+                </div>
+                <div class="fields-grid">
+                    <div class="field"><span class="label">Nome:</span><span class="value">{{ reg.name }}</span></div>
+                    {% if reg.sobrenome %}<div class="field"><span class="label">Sobrenome:</span><span class="value">{{ reg.sobrenome }}</span></div>{% endif %}
+                    <div class="field"><span class="label">E-mail:</span><span class="value">{{ reg.email }}</span></div>
+                    <div class="field"><span class="label">Cadastrado em:</span><span class="value">{{ reg.timestamp }}</span></div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="empty-state" id="emptyClients">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                <p>Nenhum cliente cadastrado ainda.</p>
+            </div>
+            {% endif %}
+            </div>
 
             <p class="panel-footer">Repair Apple Maceió &copy; 2026 &mdash; Painel Administrativo</p>
         </div>
@@ -1000,21 +1050,35 @@ def view_messages():
         <script>
             (function() {
                 var btns = document.querySelectorAll('.tab-btn');
-                var cards = document.querySelectorAll('.message-card');
+                var messagesList = document.getElementById('messagesList');
+                var clientsList = document.getElementById('clientsList');
+                var cards = document.querySelectorAll('#messagesList .message-card');
+                
                 btns.forEach(function(btn) {
                     btn.addEventListener('click', function() {
                         btns.forEach(function(b) { b.classList.remove('active'); });
                         btn.classList.add('active');
                         var filter = btn.getAttribute('data-tab');
-                        cards.forEach(function(card) {
-                            if (filter === 'all') {
-                                card.style.display = '';
-                            } else if (filter === 'orders') {
-                                card.style.display = card.getAttribute('data-type') === 'order' ? '' : 'none';
-                            } else if (filter === 'contacts') {
-                                card.style.display = card.getAttribute('data-type') === 'contact' ? '' : 'none';
-                            }
-                        });
+                        
+                        // Hide/show main sections
+                        if (filter === 'clients') {
+                            messagesList.style.display = 'none';
+                            clientsList.style.display = '';
+                        } else {
+                            messagesList.style.display = '';
+                            clientsList.style.display = 'none';
+                            
+                            // Filter cards within messages list
+                            cards.forEach(function(card) {
+                                if (filter === 'all') {
+                                    card.style.display = '';
+                                } else if (filter === 'orders') {
+                                    card.style.display = card.getAttribute('data-type') === 'order' ? '' : 'none';
+                                } else if (filter === 'contacts') {
+                                    card.style.display = card.getAttribute('data-type') === 'contact' ? '' : 'none';
+                                }
+                            });
+                        }
                     });
                 });
             })();
@@ -1022,7 +1086,51 @@ def view_messages():
     </body>
     </html>
     '''
-    return render_template_string(html, messages=messages)
+    return render_template_string(html, messages=messages, registrations=registrations)
+
+@app.route('/api/register', methods=['POST'])
+def register_customer():
+    data = request.json
+    print(f"DEBUG: Received registration: {data}")
+
+    if not data or not all(k in data for k in ('name', 'email', 'password')):
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    registration_entry = {
+        'id': datetime.now().strftime('%Y%m%d%H%M%S'),
+        'type': 'registration',
+        'timestamp': datetime.now().isoformat(),
+        'name': data['name'],
+        'sobrenome': data.get('sobrenome', ''),
+        'email': data['email'],
+        'password': data['password']  # In production, hash this!
+    }
+
+    try:
+        registrations_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'registrations.json')
+        registrations = []
+
+        if os.path.exists(registrations_file):
+            with open(registrations_file, 'r', encoding='utf-8') as f:
+                try:
+                    registrations = json.load(f)
+                except json.JSONDecodeError:
+                    registrations = []
+
+        # Check if email already exists
+        for reg in registrations:
+            if reg.get('email') == data['email']:
+                return jsonify({'error': 'Este e-mail já está cadastrado.'}), 409
+
+        registrations.append(registration_entry)
+
+        with open(registrations_file, 'w', encoding='utf-8') as f:
+            json.dump(registrations, f, indent=2, ensure_ascii=False)
+
+        return jsonify({'message': 'Cadastro realizado com sucesso! Conta criada.'})
+    except Exception as e:
+        print(f"Error saving registration: {e}")
+        return jsonify({'error': 'Erro interno ao salvar cadastro'}), 500
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8000))

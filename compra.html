@@ -140,14 +140,13 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-                        <span class="logo-text">REPAIR APPLE MACEIÓ</span>
+                        <span class="logo-text"><span class="brand-main">REPAIR APPLE</span><span class="brand-city">MACEIÓ</span></span>
                     </a>
                 </div>
                 <ul class="nav-menu">
                     <li><a href="index.html#home" class="nav-link">Início</a></li>
                     <li><a href="index.html#services" class="nav-link">Serviços</a></li>
                     <li><a href="index.html#products" class="nav-link">Produtos</a></li>
-                    <li><a href="index.html#credit-card" class="nav-link">Cartão</a></li>
                     <li><a href="index.html#about" class="nav-link">Sobre</a></li>
                     <li><a href="index.html#contact" class="nav-link">Contato</a></li>
                 </ul>
@@ -234,6 +233,23 @@
             let productName = urlParams.get('product');
             let productPrice = urlParams.get('price');
             let productImage = urlParams.get('image');
+            
+            // Auto-add product to cart so it persists through login/cadastro
+            if (productName && productPrice) {
+                let cart = JSON.parse(localStorage.getItem('cartItems') || '[]');
+                const existing = cart.find(item => item.name === productName);
+                if (existing) {
+                    existing.quantity += 1;
+                } else {
+                    cart.push({
+                        name: productName,
+                        price: parseFloat(productPrice),
+                        image: productImage,
+                        quantity: 1
+                    });
+                }
+                localStorage.setItem('cartItems', JSON.stringify(cart));
+            }
             const originParam = urlParams.get('origin');
             let productImages = urlParams.get('images');
 

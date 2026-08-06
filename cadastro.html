@@ -182,12 +182,13 @@
             <div class="nav-container">
                 <div class="nav-logo">
                     <a href="index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
-                        <span class="logo-text">REPAIR APPLE MACEIÓ</span>
+                        <span class="logo-text"><span class="brand-main">REPAIR APPLE</span><span class="brand-city">MACEIÓ</span></span>
                     </a>
                 </div>
                 <!-- Simplified Menu -->
                 <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link">Voltar ao Site</a></li>
+                    <li><a href="index.html#home" class="nav-link">Início</a></li>
+                    <li><a href="index.html#products" class="nav-link">Produtos</a></li>
                 </ul>
                 <div class="nav-toggle">
                     <span class="bar"></span>
@@ -206,58 +207,34 @@
             <h2 class="column-title">Criar minha conta</h2>
             <p class="column-text">Informe os seus dados abaixo para criar sua conta.</p>
             
-            <form style="width: 100%;">
+            <form id="cadastroForm" style="width: 100%;">
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Nome</label>
-                        <input type="text" class="form-input" placeholder="Nome" required>
+                        <input type="text" id="cadNome" class="form-input" placeholder="Nome" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Sobrenome</label>
-                        <input type="text" class="form-input" placeholder="Sobrenome" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Quero me cadastrar como: *</label>
-                    <select class="form-select">
-                        <option value="pf">Pessoa Física</option>
-                        <option value="pj">Pessoa Jurídica</option>
-                    </select>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">CPF *</label>
-                        <input type="text" class="form-input" placeholder="000.000.000-00" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">RG</label>
-                        <input type="text" class="form-input" placeholder="00.000.000-0">
+                        <input type="text" id="cadSobrenome" class="form-input" placeholder="Sobrenome" required>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">E-mail *</label>
-                    <input type="email" class="form-input" placeholder="seu@email.com" required>
+                    <input type="email" id="cadEmail" class="form-input" placeholder="seu@email.com" required>
                 </div>
                 
                 <div class="form-group">
                     <label class="form-label">Senha *</label>
                     <div class="password-container">
-                        <input type="password" class="form-input" required>
+                        <input type="password" id="cadPassword" class="form-input" required>
                         <i class="fas fa-eye password-toggle"></i>
                     </div>
                 </div>
                 
                 <div class="checkbox-group">
-                    <input type="checkbox" id="marketing" checked style="accent-color: #ff3b30;">
-                    <label for="marketing" class="checkbox-text">Aceito receber comunicação de marketing da Repair Apple</label>
-                </div>
-                
-                <div class="checkbox-group">
                     <input type="checkbox" id="terms" required>
-                    <label for="terms" class="checkbox-text">Estou ciente e CONCORDO com os <a href="#">termos de aceite</a> e <a href="#">políticas de privacidade</a> da Repair Apple.</label>
+                    <label for="terms" class="checkbox-text">Estou ciente e CONCORDO com os termos de aceite e políticas de privacidade da Repair Apple.</label>
                 </div>
                 
                 <button type="submit" class="btn-full btn-register">CRIAR CONTA</button>
@@ -287,7 +264,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Repair Apple Maceió. Todos os direitos reservados.</p>
+                <p>&copy; 2026 Repair Apple Maceió. Todos os direitos reservados.</p>
             </div>
         </div>
     </footer>
@@ -319,12 +296,86 @@
             const passwordToggle = document.querySelector('.password-toggle');
             const passwordInput = passwordToggle.previousElementSibling;
             
-            passwordToggle.addEventListener('click', () => {
-                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                passwordInput.setAttribute('type', type);
-                passwordToggle.classList.toggle('fa-eye');
-                passwordToggle.classList.toggle('fa-eye-slash');
-            });
+            if (passwordToggle && passwordInput) {
+                passwordToggle.addEventListener('click', () => {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    passwordToggle.classList.toggle('fa-eye');
+                    passwordToggle.classList.toggle('fa-eye-slash');
+                });
+            }
+
+            // Cadastro form: send to server then redirect
+            const cadastroForm = document.getElementById('cadastroForm');
+            if (cadastroForm) {
+                cadastroForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const nome = document.getElementById('cadNome').value.trim();
+                    const sobrenome = document.getElementById('cadSobrenome').value.trim();
+                    const email = document.getElementById('cadEmail').value.trim();
+                    const password = document.getElementById('cadPassword').value.trim();
+                    
+                    if (!nome || !email || !password) {
+                        alert('Por favor, preencha todos os campos obrigatórios.');
+                        return;
+                    }
+                    
+                    const btn = cadastroForm.querySelector('.btn-register');
+                    btn.textContent = 'ENVIANDO...';
+                    btn.style.backgroundColor = '#666';
+                    btn.style.color = '#fff';
+                    btn.disabled = true;
+                    
+                    try {
+                        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                            ? 'http://127.0.0.1:8000' 
+                            : 'https://repair-apple-maceio.onrender.com';
+                        
+                        const response = await fetch(API_BASE + '/api/register', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: nome,
+                                sobrenome: sobrenome,
+                                email: email,
+                                password: password
+                            })
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (response.ok) {
+                            // Store user info locally
+                            localStorage.setItem('userEmail', email);
+                            localStorage.setItem('userName', nome);
+                            
+                            // Show success
+                            btn.textContent = 'CONTA CRIADA COM SUCESSO! ✅';
+                            btn.style.backgroundColor = '#28a745';
+                            btn.style.color = '#fff';
+                            
+                            // Redirect to checkout
+                            setTimeout(() => {
+                                window.location.href = 'checkout.html';
+                            }, 1500);
+                        } else {
+                            // Show error from server
+                            btn.textContent = 'CRIAR CONTA';
+                            btn.style.backgroundColor = '#000000';
+                            btn.style.color = '#fff';
+                            btn.disabled = false;
+                            alert(result.error || 'Erro ao criar conta. Tente novamente.');
+                        }
+                    } catch (err) {
+                        console.error('Erro ao enviar cadastro:', err);
+                        btn.textContent = 'CRIAR CONTA';
+                        btn.style.backgroundColor = '#000000';
+                        btn.style.color = '#fff';
+                        btn.disabled = false;
+                        alert('Erro de conexão com o servidor. Verifique sua internet e tente novamente.');
+                    }
+                });
+            }
         });
     </script>
 </body>

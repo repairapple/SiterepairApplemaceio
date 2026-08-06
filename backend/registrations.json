@@ -1,0 +1,38 @@
+[
+  {
+    "id": "20260806062522",
+    "type": "registration",
+    "timestamp": "2026-08-06T06:25:22.401864",
+    "name": "marcos andre ribeiro",
+    "sobrenome": "silva",
+    "email": "marc_ao_2006@hotmail.com",
+    "password": "Marcocow1989"
+  },
+  {
+    "id": "20260806063607",
+    "type": "registration",
+    "timestamp": "2026-08-06T06:36:07.719833",
+    "name": "Marcos",
+    "sobrenome": "André",
+    "email": "kimoru344@gmail.com",
+    "password": "Marcocow1989"
+  },
+  {
+    "id": "20260806064149",
+    "type": "registration",
+    "timestamp": "2026-08-06T06:41:49.721016",
+    "name": "Marcos",
+    "sobrenome": "André",
+    "email": "tacianetenorio@live.com",
+    "password": "Marcocow1989"
+  },
+  {
+    "id": "20260806064257",
+    "type": "registration",
+    "timestamp": "2026-08-06T06:42:57.212313",
+    "name": "Marcos",
+    "sobrenome": "André",
+    "email": "repairapplemaceio@hotmail.com",
+    "password": "Marcocow1989"
+  }
+]
